@@ -103,12 +103,3 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("BookSave", cname) == 0) result = BookSave;
   return result;
 }
-
-
-void SystemRand(Dart_NativeArguments arguments) {
-  Dart_EnterScope();
-  Dart_Handle result = HandleError(Dart_NewInteger(rand()));
-  Dart_SetReturnValue(arguments, result);
-  Dart_ExitScope();
-}
-

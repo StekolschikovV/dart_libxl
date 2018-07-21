@@ -19,6 +19,6 @@ class XlBook {
     _BookRelease(_pointer);
   }
   bool save(String fileName) {
-    _BookSave(_pointer, fileName);
+    return _BookSave(_pointer, fileName);
   }
 }
