@@ -13,6 +13,7 @@ main() {
   print('Sheet added');
   sheet.writeStr(3,0,'Hello');
   sheet.writeStr(3,1,'World');
+  sheet.writeStr(4,0,'Привет мир');
   print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);
