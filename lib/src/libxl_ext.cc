@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string.h>
 #include <dart_api.h>
-using namespace libxl;
 // Forward declaration of ResolveName function.
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope);
 
@@ -24,84 +23,80 @@ Dart_Handle HandleError(Dart_Handle handle) {
  return handle;
 }
 
-void XlCreateBook(Dart_NativeArguments args) {
+void _xlCreateBook(Dart_NativeArguments args) {
   Dart_EnterScope();
-  Book *book = xlCreateBook();
+  BookHandle book = xlCreateBook();
   Dart_Handle result = Dart_NewInteger((int64_t)book);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
-void BookSave(Dart_NativeArguments args) {
+void _xlBookSave(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
   const char* fileName;
   Dart_StringToCString(Dart_GetNativeArgument(args, 1), &fileName);
-  Book *book = reinterpret_cast<Book*>(ptr);
-  bool res = book->save(fileName);
-  Dart_Handle result = Dart_NewBoolean(res);
+//  Book *book = reinterpret_cast<Book*>(ptr);
+//  bool res = book->save(fileName);
+  int res = xlBookSave((BookHandle) ptr, fileName);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
-void BookRelease(Dart_NativeArguments args) {
+void _xlBookRelease(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  Book *book = reinterpret_cast<Book*>(ptr);
-  book->release();
+  xlBookRelease((BookHandle) ptr);
   Dart_SetReturnValue(args, Dart_Null());
   Dart_ExitScope();
 }
-void BookAddSheet(Dart_NativeArguments args) {
+void _xlBookAddSheet(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  Book *book = reinterpret_cast<Book*>(ptr);
   const char* sheetName;
   Dart_StringToCString(Dart_GetNativeArgument(args, 1), &sheetName);
-  Sheet *sheet = book->addSheet(sheetName);
+  int64_t initSheet;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &initSheet);
+  SheetHandle sheet = xlBookAddSheet((BookHandle) ptr, sheetName, (SheetHandle) initSheet);
   Dart_Handle result = Dart_NewInteger((int64_t)sheet);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
-void BookGetSheet(Dart_NativeArguments args) {
+void _xlBookGetSheet(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  Book *book = reinterpret_cast<Book*>(ptr);
   int64_t index;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &index);
-  Sheet *sheet = book->getSheet(index);
+  SheetHandle sheet = xlBookGetSheet((BookHandle) ptr, index);
   Dart_Handle result = Dart_NewInteger((int64_t)sheet);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
-void BookErrorMessage(Dart_NativeArguments args) {
+void _xlBookErrorMessage(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  Book *book = reinterpret_cast<Book*>(ptr);
-  const char* errorMessage = book->errorMessage();
+  const char* errorMessage = xlBookErrorMessage((BookHandle) ptr);
   Dart_Handle result = Dart_NewStringFromCString(errorMessage);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
 
-void SheetWriteStr(Dart_NativeArguments args) {
+void _xlSheetWriteStr(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  Sheet *sheet = reinterpret_cast<Sheet*>(ptr);
   int64_t row;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
   int64_t col;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
   const char* value;
   Dart_StringToCString(Dart_GetNativeArgument(args, 3), &value);
-  //bool xlResult = sheet->writeStr(row, col, "Hello world");
-
-  bool xlResult = sheet->writeStr(row, col, value);
-  Dart_Handle result = Dart_NewBoolean(xlResult);
+  int res = xlSheetWriteStr((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
@@ -111,12 +106,12 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   const char* cname;
   HandleError(Dart_StringToCString(name, &cname));
 
-  if (strcmp("XlCreateBook", cname) == 0) result = XlCreateBook;
-  if (strcmp("BookRelease", cname) == 0) result = BookRelease;
-  if (strcmp("BookSave", cname) == 0) result = BookSave;
-  if (strcmp("BookGetSheet", cname) == 0) result = BookGetSheet;
-  if (strcmp("BookAddSheet", cname) == 0) result = BookAddSheet;
-  if (strcmp("BookErrorMessage", cname) == 0) result = BookErrorMessage;
-  if (strcmp("SheetWriteStr", cname) == 0) result = SheetWriteStr;
+  if (strcmp("_xlCreateBook", cname) == 0) result = _xlCreateBook;
+  if (strcmp("_xlBookRelease", cname) == 0) result = _xlBookRelease;
+  if (strcmp("_xlBookSave", cname) == 0) result = _xlBookSave;
+  if (strcmp("_xlBookGetSheet", cname) == 0) result = _xlBookGetSheet;
+  if (strcmp("_xlBookAddSheet", cname) == 0) result = _xlBookAddSheet;
+  if (strcmp("_xlBookErrorMessage", cname) == 0) result = _xlBookErrorMessage;
+  if (strcmp("_xlSheetWriteStr", cname) == 0) result = _xlSheetWriteStr;
   return result;
 }
