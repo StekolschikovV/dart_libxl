@@ -24,55 +24,19 @@ Dart_Handle HandleError(Dart_Handle handle) {
  return handle;
 }
 
-// Native functions get their arguments in a Dart_NativeArguments structure
-// and return their results with Dart_SetReturnValue.
-void SayHello(Dart_NativeArguments arguments) {
-//  Dart_EnterScope();
-
-//Dart_Handle seed_object = HandleError(Dart_GetNativeArgument(arguments, 0));
-  std::cout << "Hello, native world!!!" << std::endl;
-    Book* book = xlCreateBook();
-    std::cout << "I have greated book "<< book << std::endl;
-
-//  std::cout << "---" << std::endl;
-//      std::cout << arguments << std::endl;
-//     std::cout << "---" << std::endl;
-//
-//  Dart_SetReturnValue(arguments, Dart_Null());
-}
 void XlCreateBook(Dart_NativeArguments args) {
   Dart_EnterScope();
   Book *book = xlCreateBook();
-  // Return pointer to the object (memory address).
   Dart_Handle result = Dart_NewInteger((int64_t)book);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
-//void FuzzySearchSearch(Dart_NativeArguments args) {
-//  Dart_EnterScope();
-//  int64_t ptr;
-//  const char* term;
-//  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-//  Dart_StringToCString(Dart_GetNativeArgument(args, 1), &term);
-//  // Get the instance of FuzzySearch at this memory address.
-//  FuzzySearch *fuzzy = reinterpret_cast<FuzzySearch*>ptr;
-//  std::vector<char*> results = fuzzy->search(term);
-//  [ 193 ]Writing Native Extensions for the Standalone Dart VM
-//  Dart_Handle result = Dart_NewList(results.size());
-//  for (int i = 0; i < results.size(); i++) {
-//  Dart_ListSetAt(result, i,
-//  Dart_NewStringFromCString(results.at(i)));
-//  }
-//  Dart_SetReturnValue(args, result);
-//  Dart_ExitScope();
-//}
 void BookSave(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
   const char* fileName;
   Dart_StringToCString(Dart_GetNativeArgument(args, 1), &fileName);
-  // Get the instance of FuzzySearch at this memory address.
   Book *book = reinterpret_cast<Book*>(ptr);
   bool res = book->save(fileName);
   Dart_Handle result = Dart_NewBoolean(res);
@@ -83,23 +47,76 @@ void BookRelease(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  // Get the instance of FuzzySearch at this memory address.
   Book *book = reinterpret_cast<Book*>(ptr);
   book->release();
   Dart_SetReturnValue(args, Dart_Null());
   Dart_ExitScope();
 }
-Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
+void BookAddSheet(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  Book *book = reinterpret_cast<Book*>(ptr);
+  const char* sheetName;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 1), &sheetName);
+  Sheet *sheet = book->addSheet(sheetName);
+  Dart_Handle result = Dart_NewInteger((int64_t)sheet);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+void BookGetSheet(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  Book *book = reinterpret_cast<Book*>(ptr);
+  int64_t index;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &index);
+  Sheet *sheet = book->getSheet(index);
+  Dart_Handle result = Dart_NewInteger((int64_t)sheet);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+void BookErrorMessage(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  Book *book = reinterpret_cast<Book*>(ptr);
+  const char* errorMessage = book->errorMessage();
+  Dart_Handle result = Dart_NewStringFromCString(errorMessage);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
 
-  // If we fail, we return NULL, and Dart throws an exception.
+void SheetWriteStr(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  Sheet *sheet = reinterpret_cast<Sheet*>(ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  const char* value;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &value);
+  //bool xlResult = sheet->writeStr(row, col, "Hello world");
+
+  bool xlResult = sheet->writeStr(row, col, value);
+  Dart_Handle result = Dart_NewBoolean(xlResult);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
   const char* cname;
   HandleError(Dart_StringToCString(name, &cname));
 
-  if (strcmp("SayHello", cname) == 0) result = SayHello;
   if (strcmp("XlCreateBook", cname) == 0) result = XlCreateBook;
   if (strcmp("BookRelease", cname) == 0) result = BookRelease;
   if (strcmp("BookSave", cname) == 0) result = BookSave;
+  if (strcmp("BookGetSheet", cname) == 0) result = BookGetSheet;
+  if (strcmp("BookAddSheet", cname) == 0) result = BookAddSheet;
+  if (strcmp("BookErrorMessage", cname) == 0) result = BookErrorMessage;
+  if (strcmp("SheetWriteStr", cname) == 0) result = SheetWriteStr;
   return result;
 }
