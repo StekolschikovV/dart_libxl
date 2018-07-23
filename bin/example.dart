@@ -11,10 +11,11 @@ main() {
   }
   var sheet = book.addSheet('TestSheet');
   print('Sheet added');
-  sheet.writeStr(3,0,'Hello');
-  sheet.writeStr(3,1,'World');
-  sheet.writeStr(4,0,'Привет мир');
-  print('$sheet');
+//  sheet.writeStr(3,0,'Hello');
+//  sheet.writeStr(3,1,'World');
+  sheet.writeNum(1,0,1.1);
+//  sheet.writeNum(1,0,555);
+//  print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);
   print('File $fileName was created successfully');
