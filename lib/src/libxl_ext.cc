@@ -145,13 +145,30 @@ void _xlSheetWriteBlank(Dart_NativeArguments args) {
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
   int64_t col;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
-//  bool value;
-//  Dart_BooleanValue(Dart_GetNativeArgument(args, 3), &value);
+  int res = xlSheetWriteBlank((SheetHandle) ptr, row, col, (FormatHandle) 0);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetWriteFormula(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  const char* value;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &value);
 //        std::cout << "!!!!\n";
 //        std::cout << value << "\n";
 //        std::cout << "!!!!\n";
 //  int res = xlSheetWriteBlank((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
-  int res = xlSheetWriteBlank((SheetHandle) ptr, row, col, (FormatHandle) 0);
+
+//bool writeFormula(int row, int col, const wchar_t* value, Format* format = 0)
+
+  int res = xlSheetWriteFormula((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
   Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
@@ -174,5 +191,6 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetWriteNum", cname) == 0) result = _xlSheetWriteNum;
   if (strcmp("_xlSheetWriteBool", cname) == 0) result = _xlSheetWriteBool;
   if (strcmp("_xlSheetWriteBlank", cname) == 0) result = _xlSheetWriteBlank;
+  if (strcmp("_xlSheetWriteFormula", cname) == 0) result = _xlSheetWriteFormula;
   return result;
 }
