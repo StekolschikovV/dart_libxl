@@ -11,6 +11,7 @@ bool _xlSheetWriteFormulaBool(int ptr, int row, int col, String valueO, bool val
 bool _xlSheetWriteComment(int ptr, int row, int col, String value, String author, int width, int height) native "_xlSheetWriteComment";
 bool _xlSheetWriteError(int ptr, int row, int col, int code) native "_xlSheetWriteError";
 bool _xlSheetSetCol(int ptr, int colFirst, int colLast, double width, int hidden) native "_xlSheetSetCol";
+bool _xlSheetSetRow(int ptr, int row, double height, int hidden) native "_xlSheetSetRow";
 
 class XlSheet {
   int ptr;
@@ -94,6 +95,13 @@ class XlSheet {
 
   setCol(int colFirst, int colLast, double width, int hidden) {
     bool res = _xlSheetSetCol(ptr, colFirst, colLast, width, hidden);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setRow(int row, double height, int hidden) {
+    bool res = _xlSheetSetRow(ptr, row, height, hidden);
     if (!res) {
       throw XlException(book.errorMessage());
     }
