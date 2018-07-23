@@ -15,7 +15,8 @@ main() {
 //  sheet.writeStr(3,1,'World');
 //  sheet.writeNum(1,0,1.1);
 //  sheet.writeNum(1,0,555);
-  sheet.writeFormulaBool(1,0,'1+55',true);
+//  int row, int col, String value, String author, int width, int height
+  sheet.writeWriteComment(1,0,'1+55','222', 100, 100);
 //  print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);

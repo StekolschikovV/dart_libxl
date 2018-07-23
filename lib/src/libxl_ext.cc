@@ -215,15 +215,33 @@ void _xlSheetWriteFormulaBool(Dart_NativeArguments args) {
   Dart_StringToCString(Dart_GetNativeArgument(args, 3), &valueExpr);
   bool valueD;
   Dart_BooleanValue(Dart_GetNativeArgument(args, 3), &valueD);
-//        std::cout << "!!!!\n";
-//        std::cout << value << "\n";
-//        std::cout << "!!!!\n";
   int res = xlSheetWriteFormulaBool((SheetHandle) ptr, row, col, valueExpr, valueD, (FormatHandle) 0);
   Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
 
+void _xlSheetWriteComment(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  const char* value;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &value);
+  const char* author;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 4), &author);
+  int64_t width = 10;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 5), &width);
+  int64_t height = 10;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 6), &height);
+  xlSheetWriteComment((SheetHandle) ptr, row, col, value, author, width, height);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
 
 
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
@@ -247,5 +265,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetWriteFormulaNum", cname) == 0) result = _xlSheetWriteFormulaNum;
   if (strcmp("_xlSheetWriteFormulaStr", cname) == 0) result = _xlSheetWriteFormulaStr;
   if (strcmp("_xlSheetWriteFormulaBool", cname) == 0) result = _xlSheetWriteFormulaBool;
+  if (strcmp("_xlSheetWriteComment", cname) == 0) result = _xlSheetWriteComment;
+
   return result;
 }
