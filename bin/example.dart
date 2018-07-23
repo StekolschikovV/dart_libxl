@@ -11,12 +11,7 @@ main() {
   }
   var sheet = book.addSheet('TestSheet');
   print('Sheet added');
-//  sheet.writeStr(3,0,'Hello');
-//  sheet.writeStr(3,1,'World');
-//  sheet.writeNum(1,0,1.1);
-//  sheet.writeNum(1,0,555);
-//  int row, int col, String value, String author, int width, int height
-  sheet.writeWriteComment(1,0,'1+55','222', 100, 100);
+  sheet.writeWriteError(1,0,5);
 //  print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);

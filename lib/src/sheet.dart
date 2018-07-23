@@ -9,6 +9,7 @@ bool _xlSheetWriteFormulaNum(int ptr, int row, int col, String value) native "_x
 bool _xlSheetWriteFormulaStr(int ptr, int row, int col, String valueO, String valueT) native "_xlSheetWriteFormulaStr";
 bool _xlSheetWriteFormulaBool(int ptr, int row, int col, String valueO, bool valueT) native "_xlSheetWriteFormulaBool";
 bool _xlSheetWriteComment(int ptr, int row, int col, String value, String author, int width, int height) native "_xlSheetWriteComment";
+bool _xlSheetWriteError(int ptr, int row, int col, int code) native "_xlSheetWriteError";
 
 class XlSheet {
   int ptr;
@@ -78,6 +79,13 @@ class XlSheet {
 
   writeWriteComment(int row, int col, String value, String author, int width, int height) {
     bool res = _xlSheetWriteComment(ptr, row, col, value, author, width, height);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  writeWriteError(int row, int col, int code) {
+    bool res = _xlSheetWriteError(ptr, row, col, code);
     if (!res) {
       throw XlException(book.errorMessage());
     }
