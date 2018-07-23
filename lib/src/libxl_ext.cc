@@ -4,9 +4,7 @@
 #include <string.h>
 #include <dart_api.h>
 
-//      std::cout << "!!!!\n";
-//      std::cout << value << "\n";
-//      std::cout << "!!!!\n";
+
 
 // Forward declaration of ResolveName function.
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope);
@@ -91,21 +89,6 @@ void _xlBookErrorMessage(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
-void _xlSheetWriteNum(Dart_NativeArguments args) {
-  Dart_EnterScope();
-  int64_t ptr;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
-  int64_t row;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
-  int64_t col;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
-  double value;
-  Dart_DoubleValue(Dart_GetNativeArgument(args, 3), &value);
-  int res = xlSheetWriteNum((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
-  Dart_Handle result = Dart_NewBoolean(res != 0);
-  Dart_SetReturnValue(args, result);
-  Dart_ExitScope();
-}
 void _xlSheetWriteStr(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
@@ -121,6 +104,42 @@ void _xlSheetWriteStr(Dart_NativeArguments args) {
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
+
+void _xlSheetWriteNum(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  double value;
+  Dart_DoubleValue(Dart_GetNativeArgument(args, 3), &value);
+  int res = xlSheetWriteNum((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetWriteBool(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  bool value;
+  Dart_BooleanValue(Dart_GetNativeArgument(args, 3), &value);
+//        std::cout << "!!!!\n";
+//        std::cout << value << "\n";
+//        std::cout << "!!!!\n";
+  int res = xlSheetWriteBool((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -133,7 +152,9 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlBookGetSheet", cname) == 0) result = _xlBookGetSheet;
   if (strcmp("_xlBookAddSheet", cname) == 0) result = _xlBookAddSheet;
   if (strcmp("_xlBookErrorMessage", cname) == 0) result = _xlBookErrorMessage;
+
   if (strcmp("_xlSheetWriteStr", cname) == 0) result = _xlSheetWriteStr;
   if (strcmp("_xlSheetWriteNum", cname) == 0) result = _xlSheetWriteNum;
+  if (strcmp("_xlSheetWriteBool", cname) == 0) result = _xlSheetWriteBool;
   return result;
 }
