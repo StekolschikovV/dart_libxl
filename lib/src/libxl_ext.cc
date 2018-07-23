@@ -213,8 +213,8 @@ void _xlSheetWriteFormulaBool(Dart_NativeArguments args) {
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
   const char* valueExpr;
   Dart_StringToCString(Dart_GetNativeArgument(args, 3), &valueExpr);
-  double valueD;
-  Dart_DoubleValue(Dart_GetNativeArgument(args, 3), &valueD);
+  bool valueD;
+  Dart_BooleanValue(Dart_GetNativeArgument(args, 3), &valueD);
 //        std::cout << "!!!!\n";
 //        std::cout << value << "\n";
 //        std::cout << "!!!!\n";
@@ -223,6 +223,8 @@ void _xlSheetWriteFormulaBool(Dart_NativeArguments args) {
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
+
+
 
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
