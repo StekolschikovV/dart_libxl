@@ -175,8 +175,28 @@ void _xlSheetWriteFormulaNum(Dart_NativeArguments args) {
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
   int64_t col;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
-  const char* value;
-  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &value);
+  const char* valueC;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &valueC);
+  double valueD;
+  Dart_DoubleValue(Dart_GetNativeArgument(args, 3), &valueD);
+  int res = xlSheetWriteFormulaNum((SheetHandle) ptr, row, col, valueC,valueD, (FormatHandle) 0);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetWriteFormulaStr(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  const char* valueO;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &valueO);
+  const char* valueT;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 3), &valueT);
 //        std::cout << "!!!!\n";
 //        std::cout << value << "\n";
 //        std::cout << "!!!!\n";
@@ -184,7 +204,8 @@ void _xlSheetWriteFormulaNum(Dart_NativeArguments args) {
 
 // bool writeFormulaNum(int row, int col, const wchar_t* expr, double value, Format* format = 0)
 //heetHandle, int, int, const char*, FormatHandle
-  int res = xlSheetWriteFormula((SheetHandle) ptr, row, col, value, (FormatHandle) 0);
+//SheetHandle, int, int, const char*, const char*, FormatHandle)
+  int res = xlSheetWriteFormulaStr((SheetHandle) ptr, row, col, valueO, valueT, (FormatHandle) 0);
   Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
@@ -209,5 +230,6 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetWriteBlank", cname) == 0) result = _xlSheetWriteBlank;
   if (strcmp("_xlSheetWriteFormula", cname) == 0) result = _xlSheetWriteFormula;
   if (strcmp("_xlSheetWriteFormulaNum", cname) == 0) result = _xlSheetWriteFormulaNum;
+  if (strcmp("_xlSheetWriteFormulaStr", cname) == 0) result = _xlSheetWriteFormulaStr;
   return result;
 }

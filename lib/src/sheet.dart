@@ -6,6 +6,7 @@ bool _xlSheetWriteBool(int ptr, int row, int col, bool value) native "_xlSheetWr
 bool _xlSheetWriteBlank(int ptr, int row, int col) native "_xlSheetWriteBlank";
 bool _xlSheetWriteFormula(int ptr, int row, int col, String value) native "_xlSheetWriteFormula";
 bool _xlSheetWriteFormulaNum(int ptr, int row, int col, String value) native "_xlSheetWriteFormulaNum";
+bool _xlSheetWriteFormulaStr(int ptr, int row, int col, String valueO, String valueT) native "_xlSheetWriteFormulaStr";
 
 class XlSheet {
   int ptr;
@@ -54,6 +55,13 @@ class XlSheet {
 
   writeFormulaNum(int row, int col, String value) {
     bool res = _xlSheetWriteFormulaNum(ptr, row, col, value);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  writeFormulaStr(int row, int col, String valueO, String valueT) {
+    bool res = _xlSheetWriteFormulaStr(ptr, row, col, valueO, valueT);
     if (!res) {
       throw XlException(book.errorMessage());
     }
