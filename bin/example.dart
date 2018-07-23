@@ -15,7 +15,7 @@ main() {
 //  sheet.writeStr(3,1,'World');
 //  sheet.writeNum(1,0,1.1);
 //  sheet.writeNum(1,0,555);
-  sheet.writeBool(1,0,true);
+  sheet.writeBlank(1,0);
 //  print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);
