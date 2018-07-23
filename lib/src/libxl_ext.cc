@@ -26,6 +26,7 @@ Dart_Handle HandleError(Dart_Handle handle) {
  return handle;
 }
 
+
 void _xlCreateBook(Dart_NativeArguments args) {
   Dart_EnterScope();
   BookHandle book = xlCreateBook();
@@ -260,6 +261,24 @@ void _xlSheetWriteError(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetSetCol(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t colFirst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &colFirst);
+  int64_t colLast;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &colLast);
+  double width;
+  Dart_DoubleValue(Dart_GetNativeArgument(args, 3), &width);
+  int64_t hidden;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &hidden);
+  xlSheetSetCol((SheetHandle) ptr, colFirst, colLast, width, (FormatHandle) 0, hidden);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -283,6 +302,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetWriteFormulaBool", cname) == 0) result = _xlSheetWriteFormulaBool;
   if (strcmp("_xlSheetWriteComment", cname) == 0) result = _xlSheetWriteComment;
   if (strcmp("_xlSheetWriteError", cname) == 0) result = _xlSheetWriteError;
+  if (strcmp("_xlSheetSetCol", cname) == 0) result = _xlSheetSetCol;
 
   return result;
 }

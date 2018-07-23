@@ -10,6 +10,7 @@ bool _xlSheetWriteFormulaStr(int ptr, int row, int col, String valueO, String va
 bool _xlSheetWriteFormulaBool(int ptr, int row, int col, String valueO, bool valueT) native "_xlSheetWriteFormulaBool";
 bool _xlSheetWriteComment(int ptr, int row, int col, String value, String author, int width, int height) native "_xlSheetWriteComment";
 bool _xlSheetWriteError(int ptr, int row, int col, int code) native "_xlSheetWriteError";
+bool _xlSheetSetCol(int ptr, int colFirst, int colLast, double width, int hidden) native "_xlSheetSetCol";
 
 class XlSheet {
   int ptr;
@@ -77,15 +78,22 @@ class XlSheet {
     }
   }
 
-  writeWriteComment(int row, int col, String value, String author, int width, int height) {
+  writeComment(int row, int col, String value, String author, int width, int height) {
     bool res = _xlSheetWriteComment(ptr, row, col, value, author, width, height);
     if (!res) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeWriteError(int row, int col, int code) {
+  writeError(int row, int col, int code) {
     bool res = _xlSheetWriteError(ptr, row, col, code);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setCol(int colFirst, int colLast, double width, int hidden) {
+    bool res = _xlSheetSetCol(ptr, colFirst, colLast, width, hidden);
     if (!res) {
       throw XlException(book.errorMessage());
     }
