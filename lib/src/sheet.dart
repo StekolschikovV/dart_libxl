@@ -19,6 +19,7 @@ bool _xlSheetSetPicture(int ptr, int row, int col, int pictureId, double scale, 
 bool _xlSheetSetPicture2(int ptr, int row, int col, int pictureId, int width, int height, int offset_x, int offset_y) native "_xlSheetSetPicture2";
 bool _xlSheetSetHorPageBreak(int ptr, int row, int pageBreak) native "_xlSheetSetHorPageBreak";
 bool _xlSheetSetVerPageBreak(int ptr, int col, int pageBreak) native "_xlSheetSetHorPageBreak";
+bool _xlSheetSplit(int ptr, int row, int col) native "_xlSheetSplit";
 
 class XlSheet {
   int ptr;
@@ -158,6 +159,13 @@ class XlSheet {
 
   setVerPageBreak(int col, int pageBreak) {
     bool res = _xlSheetSetVerPageBreak(ptr, col, pageBreak);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  split(int row, int col) {
+    bool res = _xlSheetSplit(ptr, row, col);
     if (!res) {
       throw XlException(book.errorMessage());
     }
