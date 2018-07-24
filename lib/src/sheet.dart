@@ -14,6 +14,7 @@ bool _xlSheetSetCol(int ptr, int colFirst, int colLast, double width, int hidden
 bool _xlSheetSetRow(int ptr, int row, double height, int hidden) native "_xlSheetSetRow";
 bool _xlSheetSetRowHidden(int ptr, int row, bool hidden) native "_xlSheetSetRowHidden";
 bool _xlSheetSetColHidden(int ptr, int col, int hidden) native "_xlSheetSetRowHidden";
+bool _xlSheetSetMerge(int ptr, int rowFirst, int rowLast, int colFirst, int colLast) native "_xlSheetSetMerge";
 
 class XlSheet {
   int ptr;
@@ -118,6 +119,13 @@ class XlSheet {
 
   setColHidden(int row, int hidden) {
     bool res = _xlSheetSetColHidden(ptr, row, hidden);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setMerge(int rowFirst, int rowLast, int colFirst, int colLast) {
+    bool res = _xlSheetSetMerge(ptr, rowFirst, rowLast, colFirst, colLast);
     if (!res) {
       throw XlException(book.errorMessage());
     }
