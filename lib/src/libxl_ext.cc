@@ -561,6 +561,37 @@ void _xlSheetRemoveCol(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetCopyCell(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t rowSrc;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &rowSrc);
+  int64_t colSrc;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &colSrc);
+  int64_t rowDst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &rowDst);
+  int64_t colDst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 4), &colDst);
+  int res = xlSheetCopyCell((SheetHandle) ptr, rowSrc, colSrc, rowDst, colDst);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+
+void _xlSheetSetDisplayGridlines(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t show;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &show);
+  xlSheetSetDisplayGridlines((SheetHandle) ptr, show);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -603,6 +634,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetInsertCol", cname) == 0) result = _xlSheetInsertCol;
   if (strcmp("_xlSheetRemoveRow", cname) == 0) result = _xlSheetRemoveRow;
   if (strcmp("_xlSheetRemoveCol", cname) == 0) result = _xlSheetRemoveCol;
+  if (strcmp("_xlSheetCopyCell", cname) == 0) result = _xlSheetCopyCell;
+  if (strcmp("_xlSheetSetDisplayGridlines", cname) == 0) result = _xlSheetSetDisplayGridlines;
 
   return result;
 }
