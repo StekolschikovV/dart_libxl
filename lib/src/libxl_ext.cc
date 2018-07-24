@@ -616,6 +616,56 @@ void _xlSheetSetZoom(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetSetPrintZoom(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t zoom;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &zoom);
+  xlSheetSetPrintZoom((SheetHandle) ptr, zoom);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetSetPrintFit(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t wPages;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &wPages);
+  int64_t hPages;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &hPages);
+  xlSheetSetPrintFit((SheetHandle) ptr, wPages, hPages);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetSetLandscape(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t landscape;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &landscape);
+  xlSheetSetLandscape((SheetHandle) ptr, landscape);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetSetPaper(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t paper;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &paper);
+  xlSheetSetPaper((SheetHandle) ptr, paper);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -662,6 +712,10 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetDisplayGridlines", cname) == 0) result = _xlSheetSetDisplayGridlines;
   if (strcmp("_xlSheetSetPrintGridlines", cname) == 0) result = _xlSheetSetPrintGridlines;
   if (strcmp("_xlSheetSetZoom", cname) == 0) result = _xlSheetSetZoom;
+  if (strcmp("_xlSheetSetPrintZoom", cname) == 0) result = _xlSheetSetPrintZoom;
+  if (strcmp("_xlSheetSetPrintFit", cname) == 0) result = _xlSheetSetPrintFit;
+  if (strcmp("_xlSheetSetLandscape", cname) == 0) result = _xlSheetSetLandscape;
+  if (strcmp("_xlSheetSetPaper", cname) == 0) result = _xlSheetSetPaper;
 
   return result;
 }

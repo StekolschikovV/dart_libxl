@@ -33,6 +33,10 @@ bool _xlSheetCopyCell(int ptr, int rowSrc, int colSrc, int rowDst, int colDst) n
 bool _xlSheetSetDisplayGridlines(int ptr, int show) native "_xlSheetSetDisplayGridlines";
 bool _xlSheetSetPrintGridlines(int ptr, int print) native "_xlSheetSetPrintGridlines";
 bool _xlSheetSetZoom(int ptr, int zoom) native "_xlSheetSetZoom";
+bool _xlSheetSetPrintZoom(int ptr, int zoom) native "_xlSheetSetPrintZoom";
+bool _xlSheetSetPrintFit(int ptr, int wPages, int hPages) native "_xlSheetSetPrintFit";
+bool _xlSheetSetLandscape(int ptr, int landscape) native "_xlSheetSetLandscape";
+bool _xlSheetSetPaper(int ptr, int paper) native "_xlSheetSetPaper";
 
 class XlSheet {
   int ptr;
@@ -274,5 +278,34 @@ class XlSheet {
       throw XlException(book.errorMessage());
     }
   }
+
+  setPrintZoom(int zoom) {
+    bool res = _xlSheetSetPrintZoom(ptr, zoom);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setPrintFit(int wPages, int hPages) {
+    bool res = _xlSheetSetPrintFit(ptr, wPages, hPages);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setLandscape(int landscape) {
+    bool res = _xlSheetSetLandscape(ptr, landscape);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setPaper(int paper) {
+    bool res = _xlSheetSetPaper(ptr, paper);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
 
 }
