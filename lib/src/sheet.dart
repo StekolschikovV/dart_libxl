@@ -21,6 +21,7 @@ bool _xlSheetSetHorPageBreak(int ptr, int row, int pageBreak) native "_xlSheetSe
 bool _xlSheetSetVerPageBreak(int ptr, int col, int pageBreak) native "_xlSheetSetHorPageBreak";
 bool _xlSheetSplit(int ptr, int row, int col) native "_xlSheetSplit";
 bool _xlSheetGroupRows(int ptr, int rowFirst, int rowLast, int collapsed) native "_xlSheetGroupRows";
+bool _xlSheetGroupCols(int ptr, int colFirst, int colLast, int collapsed) native "_xlSheetGroupCols";
 
 class XlSheet {
   int ptr;
@@ -178,4 +179,12 @@ class XlSheet {
       throw XlException(book.errorMessage());
     }
   }
+
+  groupCols(int colFirst, int colLast, int collapsed) {
+    bool res = _xlSheetGroupCols(ptr, colFirst, colLast, collapsed);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
 }
