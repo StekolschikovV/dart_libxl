@@ -39,6 +39,7 @@ bool _xlSheetSetLandscape(int ptr, int landscape) native "_xlSheetSetLandscape";
 bool _xlSheetSetPaper(int ptr, int paper) native "_xlSheetSetPaper";
 bool _xlSheetSetHeader(int ptr, String header, double margin) native "_xlSheetSetHeader";
 bool _xlSheetSetFooter(int ptr, String footer, double margin) native "_xlSheetSetFooter";
+bool _xlSheetSetHCenter(int ptr, int hCenter) native "_xlSheetSetHCenter";
 
 class XlSheet {
   int ptr;
@@ -322,4 +323,12 @@ class XlSheet {
       throw XlException(book.errorMessage());
     }
   }
+
+  setHCenter(int hCenter) {
+    bool res = _xlSheetSetHCenter(ptr, hCenter);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
 }
