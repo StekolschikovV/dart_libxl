@@ -13,6 +13,7 @@ bool _xlSheetWriteError(int ptr, int row, int col, int code) native "_xlSheetWri
 bool _xlSheetSetCol(int ptr, int colFirst, int colLast, double width, int hidden) native "_xlSheetSetCol";
 bool _xlSheetSetRow(int ptr, int row, double height, int hidden) native "_xlSheetSetRow";
 bool _xlSheetSetRowHidden(int ptr, int row, bool hidden) native "_xlSheetSetRowHidden";
+bool _xlSheetSetColHidden(int ptr, int col, int hidden) native "_xlSheetSetRowHidden";
 
 class XlSheet {
   int ptr;
@@ -110,6 +111,13 @@ class XlSheet {
 
   setRowHidden(int row, bool hidden) {
     bool res = _xlSheetSetRowHidden(ptr, row, hidden);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setColHidden(int row, int hidden) {
+    bool res = _xlSheetSetColHidden(ptr, row, hidden);
     if (!res) {
       throw XlException(book.errorMessage());
     }

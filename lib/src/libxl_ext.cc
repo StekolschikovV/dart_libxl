@@ -309,6 +309,20 @@ void _xlSheetSetRowHidden(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetSetColHidden(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &col);
+  int64_t hidden;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &hidden);
+  int res = xlSheetSetColHidden((SheetHandle) ptr, col, hidden);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -335,6 +349,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetCol", cname) == 0) result = _xlSheetSetCol;
   if (strcmp("_xlSheetSetRow", cname) == 0) result = _xlSheetSetRow;
   if (strcmp("_xlSheetSetRowHidden", cname) == 0) result = _xlSheetSetRowHidden;
+  if (strcmp("_xlSheetSetColHidden", cname) == 0) result = _xlSheetSetColHidden;
 
   return result;
 }
