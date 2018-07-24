@@ -37,6 +37,7 @@ bool _xlSheetSetPrintZoom(int ptr, int zoom) native "_xlSheetSetPrintZoom";
 bool _xlSheetSetPrintFit(int ptr, int wPages, int hPages) native "_xlSheetSetPrintFit";
 bool _xlSheetSetLandscape(int ptr, int landscape) native "_xlSheetSetLandscape";
 bool _xlSheetSetPaper(int ptr, int paper) native "_xlSheetSetPaper";
+bool _xlSheetSetHeader(int ptr, String header, double margin) native "_xlSheetSetHeader";
 
 class XlSheet {
   int ptr;
@@ -307,5 +308,11 @@ class XlSheet {
     }
   }
 
+  setHeader(String header, double margin) {
+    bool res = _xlSheetSetHeader(ptr, header, margin);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
 
 }
