@@ -53,6 +53,16 @@ main() {
   String moduleName = 'SheetW';
   generateFor(dirSrc + fileName, moduleName);
   add__Dart_NativeFunction(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+
+  replaceWchar_t(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+}
+replaceWchar_t(String dirBaseSrc, String dirSrc, String fileName, String moduleName){
+  new File(dirBaseSrc + moduleName + '.g.cc')
+      .readAsString()
+      .then((String contents) {
+    contents = contents.replaceAll(new RegExp(r'const wchar_t'), 'const char');
+    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
+  });
 }
 
 add__Dart_NativeFunction(
@@ -76,7 +86,7 @@ add__Dart_NativeFunction(
 
     contents = contents + '  return result;' + '\n\n';
     contents = contents + '}' + '\n\n';
-    
+
     File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
   });
 }
