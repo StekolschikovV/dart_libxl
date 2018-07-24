@@ -11,7 +11,7 @@ main() {
   }
   var sheet = book.addSheet('TestSheet');
   print('Sheet added');
-  sheet.setRow(1,400.0,1);
+  sheet.setRowHidden(1,false);
 //  print('$sheet');
   var fileName = 'test.xls';
   book.save(fileName);

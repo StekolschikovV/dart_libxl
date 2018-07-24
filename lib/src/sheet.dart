@@ -12,6 +12,7 @@ bool _xlSheetWriteComment(int ptr, int row, int col, String value, String author
 bool _xlSheetWriteError(int ptr, int row, int col, int code) native "_xlSheetWriteError";
 bool _xlSheetSetCol(int ptr, int colFirst, int colLast, double width, int hidden) native "_xlSheetSetCol";
 bool _xlSheetSetRow(int ptr, int row, double height, int hidden) native "_xlSheetSetRow";
+bool _xlSheetSetRowHidden(int ptr, int row, bool hidden) native "_xlSheetSetRowHidden";
 
 class XlSheet {
   int ptr;
@@ -102,6 +103,13 @@ class XlSheet {
 
   setRow(int row, double height, int hidden) {
     bool res = _xlSheetSetRow(ptr, row, height, hidden);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setRowHidden(int row, bool hidden) {
+    bool res = _xlSheetSetRowHidden(ptr, row, hidden);
     if (!res) {
       throw XlException(book.errorMessage());
     }
