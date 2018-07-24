@@ -28,6 +28,7 @@ bool _xlSheetClear(int ptr, int rowLast, int colFirst, int colLast) native "_xlS
 bool _xlSheetInsertRow(int ptr, int rowFirst, int rowLast) native "_xlSheetClear";
 bool _xlSheetInsertCol(int ptr, int colFirst, int colLast) native "_xlSheetInsertCol";
 bool _xlSheetRemoveRow(int ptr, int rowFirst, int rowLast) native "_xlSheetRemoveRow";
+bool _xlSheetRemoveCol(int ptr, int colFirst, int colLast) native "_xlSheetRemoveCol";
 
 class XlSheet {
   int ptr;
@@ -230,6 +231,13 @@ class XlSheet {
 
   removeRow(int rowFirst, int rowLast) {
     bool res = _xlSheetRemoveRow(ptr, rowFirst, rowLast);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  removeCol(int colFirst, int colLast) {
+    bool res = _xlSheetRemoveCol(ptr, colFirst, colLast);
     if (!res) {
       throw XlException(book.errorMessage());
     }

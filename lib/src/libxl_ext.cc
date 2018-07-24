@@ -547,7 +547,19 @@ void _xlSheetRemoveRow(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
-
+void _xlSheetRemoveCol(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t colFirst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &colFirst);
+  int64_t colLast;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &colLast);
+  int res = xlSheetRemoveCol((SheetHandle) ptr, colFirst, colLast);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
 
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
@@ -590,6 +602,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetInsertRow", cname) == 0) result = _xlSheetInsertRow;
   if (strcmp("_xlSheetInsertCol", cname) == 0) result = _xlSheetInsertCol;
   if (strcmp("_xlSheetRemoveRow", cname) == 0) result = _xlSheetRemoveRow;
+  if (strcmp("_xlSheetRemoveCol", cname) == 0) result = _xlSheetRemoveCol;
 
   return result;
 }
