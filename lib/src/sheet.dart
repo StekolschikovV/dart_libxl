@@ -15,6 +15,7 @@ bool _xlSheetSetRow(int ptr, int row, double height, int hidden) native "_xlShee
 bool _xlSheetSetRowHidden(int ptr, int row, bool hidden) native "_xlSheetSetRowHidden";
 bool _xlSheetSetColHidden(int ptr, int col, int hidden) native "_xlSheetSetRowHidden";
 bool _xlSheetSetMerge(int ptr, int rowFirst, int rowLast, int colFirst, int colLast) native "_xlSheetSetMerge";
+bool _xlSheetSetPicture(int ptr, int row, int col, int pictureId, double scale, int offset_x, int offset_y, int pos) native "_xlSheetSetPicture";
 
 class XlSheet {
   int ptr;
@@ -126,6 +127,13 @@ class XlSheet {
 
   setMerge(int rowFirst, int rowLast, int colFirst, int colLast) {
     bool res = _xlSheetSetMerge(ptr, rowFirst, rowLast, colFirst, colLast);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setPicture(int row, int col, int pictureId, double scale, int offset_x, int offset_y, int pos) {
+    bool res = _xlSheetSetPicture(ptr, row, col, pictureId, scale, offset_x, offset_y, pos);
     if (!res) {
       throw XlException(book.errorMessage());
     }
