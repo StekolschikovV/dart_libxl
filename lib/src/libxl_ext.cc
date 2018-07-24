@@ -579,7 +579,6 @@ void _xlSheetCopyCell(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
-
 void _xlSheetSetDisplayGridlines(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
@@ -587,6 +586,31 @@ void _xlSheetSetDisplayGridlines(Dart_NativeArguments args) {
   int64_t show;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &show);
   xlSheetSetDisplayGridlines((SheetHandle) ptr, show);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+
+void _xlSheetSetPrintGridlines(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t print;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &print);
+  xlSheetSetPrintGridlines((SheetHandle) ptr, print);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetSetZoom(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t zoom;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &zoom);
+  xlSheetSetZoom((SheetHandle) ptr, zoom);
   Dart_Handle result = Dart_NewBoolean(1 != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
@@ -636,6 +660,8 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetRemoveCol", cname) == 0) result = _xlSheetRemoveCol;
   if (strcmp("_xlSheetCopyCell", cname) == 0) result = _xlSheetCopyCell;
   if (strcmp("_xlSheetSetDisplayGridlines", cname) == 0) result = _xlSheetSetDisplayGridlines;
+  if (strcmp("_xlSheetSetPrintGridlines", cname) == 0) result = _xlSheetSetPrintGridlines;
+  if (strcmp("_xlSheetSetZoom", cname) == 0) result = _xlSheetSetZoom;
 
   return result;
 }

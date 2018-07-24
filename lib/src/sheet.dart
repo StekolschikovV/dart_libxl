@@ -31,6 +31,8 @@ bool _xlSheetRemoveRow(int ptr, int rowFirst, int rowLast) native "_xlSheetRemov
 bool _xlSheetRemoveCol(int ptr, int colFirst, int colLast) native "_xlSheetRemoveCol";
 bool _xlSheetCopyCell(int ptr, int rowSrc, int colSrc, int rowDst, int colDst) native "_xlSheetCopyCell";
 bool _xlSheetSetDisplayGridlines(int ptr, int show) native "_xlSheetSetDisplayGridlines";
+bool _xlSheetSetPrintGridlines(int ptr, int print) native "_xlSheetSetPrintGridlines";
+bool _xlSheetSetZoom(int ptr, int zoom) native "_xlSheetSetZoom";
 
 class XlSheet {
   int ptr;
@@ -254,6 +256,20 @@ class XlSheet {
 
   setDisplayGridlines(int show) {
     bool res = _xlSheetSetDisplayGridlines(ptr, show);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setPrintGridlines(int print) {
+    bool res = _xlSheetSetPrintGridlines(ptr, print);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setZoom(int zoom) {
+    bool res = _xlSheetSetZoom(ptr, zoom);
     if (!res) {
       throw XlException(book.errorMessage());
     }
