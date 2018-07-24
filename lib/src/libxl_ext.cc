@@ -354,12 +354,36 @@ void _xlSheetSetPicture(Dart_NativeArguments args) {
   double scale;
   Dart_DoubleValue(Dart_GetNativeArgument(args, 4), &scale);
   int64_t offset_x;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &offset_x);
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 5), &offset_x);
   int64_t offset_y;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &offset_y);
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 6), &offset_y);
   int64_t pos;
-  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &pos);
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 7), &pos);
   xlSheetSetPicture((SheetHandle) ptr, row, col, pictureId, scale, offset_x, offset_y, pos);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetSetPicture2(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t row;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &row);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &col);
+  int64_t pictureId;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &pictureId);
+  int64_t width;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 4), &width);
+  int64_t height;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 5), &height);
+  int64_t offset_x;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 6), &offset_x);
+  int64_t offset_y;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 7), &offset_y);
+  xlSheetSetPicture((SheetHandle) ptr, row, col, pictureId, width, height, offset_x, offset_y);
   Dart_Handle result = Dart_NewBoolean(1 != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
@@ -394,6 +418,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetColHidden", cname) == 0) result = _xlSheetSetColHidden;
   if (strcmp("_xlSheetSetMerge", cname) == 0) result = _xlSheetSetMerge;
   if (strcmp("_xlSheetSetPicture", cname) == 0) result = _xlSheetSetPicture;
+  if (strcmp("_xlSheetSetPicture2", cname) == 0) result = _xlSheetSetPicture2;
 
   return result;
 }
