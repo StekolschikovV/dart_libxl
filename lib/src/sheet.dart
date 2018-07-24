@@ -25,6 +25,7 @@ bool _xlSheetGroupCols(int ptr, int colFirst, int colLast, int collapsed) native
 bool _xlSheetSetGroupSummaryBelow(int ptr, int below) native "_xlSheetGroupCols";
 bool _xlSheetSetGroupSummaryRight(int ptr, int right) native "_xlSheetSetGroupSummaryRight";
 bool _xlSheetClear(int ptr, int rowLast, int colFirst, int colLast) native "_xlSheetClear";
+bool _xlSheetInsertRow(int ptr, int rowFirst, int rowLast) native "_xlSheetClear";
 
 class XlSheet {
   int ptr;
@@ -211,4 +212,10 @@ class XlSheet {
     }
   }
 
+  insertRow(int rowFirst, int rowLast) {
+    bool res = _xlSheetInsertRow(ptr, rowFirst, rowLast);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
 }
