@@ -463,6 +463,18 @@ void _xlSheetGroupCols(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetSetGroupSummaryBelow(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t below;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &below);
+  xlSheetSetGroupSummaryBelow((SheetHandle) ptr, below);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -498,6 +510,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSplit", cname) == 0) result = _xlSheetSplit;
   if (strcmp("_xlSheetGroupRows", cname) == 0) result = _xlSheetGroupRows;
   if (strcmp("_xlSheetGroupCols", cname) == 0) result = _xlSheetGroupCols;
+  if (strcmp("_xlSheetSetGroupSummaryBelow", cname) == 0) result = _xlSheetSetGroupSummaryBelow;
 
   return result;
 }
