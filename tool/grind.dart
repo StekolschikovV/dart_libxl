@@ -12,9 +12,9 @@ build() {
 void _createLib(String moduleName) {
   var includeDir = sdkDir.path + '/include';
   run('g++',arguments: ['-fPIC', '-I$includeDir','-Iinclude_c','-DDART_SHARED_LIB','-c','$moduleName.cc']
-  , workingDirectory: 'lib/src');
+  , workingDirectory: 'lib/src/c');
   run('gcc',arguments: ['-shared', '-Wl,-soname,lib$moduleName.so','-olib$moduleName.so','$moduleName.o','-lxl']
-      , workingDirectory: 'lib/src');
+      , workingDirectory: 'lib/src/c');
 }
 
 
