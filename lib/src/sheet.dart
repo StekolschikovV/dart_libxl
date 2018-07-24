@@ -18,6 +18,7 @@ bool _xlSheetSetMerge(int ptr, int rowFirst, int rowLast, int colFirst, int colL
 bool _xlSheetSetPicture(int ptr, int row, int col, int pictureId, double scale, int offset_x, int offset_y, int pos) native "_xlSheetSetPicture";
 bool _xlSheetSetPicture2(int ptr, int row, int col, int pictureId, int width, int height, int offset_x, int offset_y) native "_xlSheetSetPicture2";
 bool _xlSheetSetHorPageBreak(int ptr, int row, int pageBreak) native "_xlSheetSetHorPageBreak";
+bool _xlSheetSetVerPageBreak(int ptr, int col, int pageBreak) native "_xlSheetSetHorPageBreak";
 
 class XlSheet {
   int ptr;
@@ -150,6 +151,13 @@ class XlSheet {
 
   setHorPageBreak(int row, int pageBreak) {
     bool res = _xlSheetSetHorPageBreak(ptr, row, pageBreak);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setVerPageBreak(int col, int pageBreak) {
+    bool res = _xlSheetSetVerPageBreak(ptr, col, pageBreak);
     if (!res) {
       throw XlException(book.errorMessage());
     }

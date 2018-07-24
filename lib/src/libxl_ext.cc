@@ -403,6 +403,20 @@ void _xlSheetSetHorPageBreak(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetSetVerPageBreak(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t col;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &col);
+  int64_t pageBreak;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &pageBreak);
+  int res = xlSheetSetVerPageBreak((SheetHandle) ptr, col, pageBreak);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -434,6 +448,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetPicture", cname) == 0) result = _xlSheetSetPicture;
   if (strcmp("_xlSheetSetPicture2", cname) == 0) result = _xlSheetSetPicture2;
   if (strcmp("_xlSheetSetHorPageBreak", cname) == 0) result = _xlSheetSetHorPageBreak;
+  if (strcmp("_xlSheetSetVerPageBreak", cname) == 0) result = _xlSheetSetVerPageBreak;
 
   return result;
 }
