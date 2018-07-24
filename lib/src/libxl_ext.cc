@@ -674,8 +674,23 @@ void _xlSheetSetHeader(Dart_NativeArguments args) {
   Dart_StringToCString(Dart_GetNativeArgument(args, 1), &header);
   double margin;
   Dart_DoubleValue(Dart_GetNativeArgument(args, 2), &margin);
-  xlSheetSetHeader((SheetHandle) ptr, header, margin);
-  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  int res = xlSheetSetHeader((SheetHandle) ptr, header, margin);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+//int xlSheetSetFooter(SheetHandle handle, const wchar_t* footer, double margin)
+void _xlSheetSetFooter(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  const char*  footer;
+  Dart_StringToCString(Dart_GetNativeArgument(args, 1), &footer);
+  double margin;
+  Dart_DoubleValue(Dart_GetNativeArgument(args, 2), &margin);
+  int res = xlSheetSetFooter((SheetHandle) ptr, footer, margin);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
 }
@@ -731,6 +746,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetLandscape", cname) == 0) result = _xlSheetSetLandscape;
   if (strcmp("_xlSheetSetPaper", cname) == 0) result = _xlSheetSetPaper;
   if (strcmp("_xlSheetSetHeader", cname) == 0) result = _xlSheetSetHeader;
+  if (strcmp("_xlSheetSetFooter", cname) == 0) result = _xlSheetSetFooter;
 
   return result;
 }
