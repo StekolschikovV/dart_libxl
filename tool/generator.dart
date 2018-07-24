@@ -36,7 +36,7 @@ class FunctionDescriptor {
 const cpp2DartTypes = {
   'BookHandle': DartType.Handle,
   'SheetHandle': DartType.Handle,
-  'FormatHandle': DartType.Handle,
+//  'FormatHandle': DartType.Handle,
   'const wchar_t*': DartType.String,
   'const char*': DartType.String,
   'int': DartType.int,
@@ -77,7 +77,9 @@ generateFor(String fileName, String moduleName) {
             ..typeName = paramItems.join(' ');
         }
         newParam.dartType = cpp2DartTypes[newParam.typeName];
-        params.add(newParam);
+        if (newParam.dartType != DartType.Void) {
+          params.add(newParam);
+        }
       }
       var desc = FunctionDescriptor()
         ..source = line
@@ -108,7 +110,9 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
   generateParamSection(output, desc);
   var paramNames = desc.params
       .where((pd) => pd.typeName != 'void')
-      .map((pd) => (pd.dartType == DartType.Handle ? '(${pd.typeName}) ' : '') + pd.paramName)
+      .map((pd) =>
+          (pd.dartType == DartType.Handle ? '(${pd.typeName}) ' : '') +
+          pd.paramName)
       .join(', ');
   if (resultType == DartType.Void) {
     output.writeln('  ${desc.funcName}($paramNames);');
@@ -122,7 +126,7 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
           '  Dart_Handle result = Dart_NewInteger((int64_t) cResult);');
       break;
     case DartType.Void:
-      output.writeln('  Dart_Handle result = Dart_NewInteger(Dart_Null());');
+//      output.writeln('  Dart_Handle result = Dart_NewInteger(Dart_Null());');
       break;
     case DartType.String:
       output.writeln(
@@ -139,8 +143,12 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
       break;
   }
 
-  if (resultType == DartType.Handle) {}
-  output.writeln('  Dart_SetReturnValue(args, result);');
+  if (resultType == DartType.Void) {
+    output.writeln('  Dart_SetReturnValue(args, Dart_Null());');
+  } else {
+    output.writeln('  Dart_SetReturnValue(args, result);');
+  }
+
   output.writeln('  Dart_ExitScope();');
   output.writeln('}\n');
 }
@@ -148,7 +156,13 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
 generateParamSection(StringBuffer output, FunctionDescriptor desc) {
   int index = 0;
   for (var each in desc.params) {
-    output.writeln('  ${each.typeName} ${each.paramName};');
+    var varType = each.typeName;
+    if (each.dartType == DartType.Handle || each.dartType == DartType.int) {
+      varType = 'int64_t';
+    } else if (each.dartType == DartType.String) {
+      varType = 'const char*';
+    }
+    output.writeln('  ${varType} ${each.paramName};');
     switch (each.dartType) {
       case DartType.Handle:
         output.writeln(

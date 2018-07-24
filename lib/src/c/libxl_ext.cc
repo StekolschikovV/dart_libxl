@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include <dart_api.h>
-#include "book.cc"
+#include "book.g.cc"
 
 //      std::cout << "!!!!\n";
 //      std::cout << value << "\n";
