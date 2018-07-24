@@ -20,6 +20,7 @@ bool _xlSheetSetPicture2(int ptr, int row, int col, int pictureId, int width, in
 bool _xlSheetSetHorPageBreak(int ptr, int row, int pageBreak) native "_xlSheetSetHorPageBreak";
 bool _xlSheetSetVerPageBreak(int ptr, int col, int pageBreak) native "_xlSheetSetHorPageBreak";
 bool _xlSheetSplit(int ptr, int row, int col) native "_xlSheetSplit";
+bool _xlSheetGroupRows(int ptr, int rowFirst, int rowLast, int collapsed) native "_xlSheetGroupRows";
 
 class XlSheet {
   int ptr;
@@ -171,4 +172,10 @@ class XlSheet {
     }
   }
 
+  groupRows(int rowFirst, int rowLast, int collapsed) {
+    bool res = _xlSheetGroupRows(ptr, rowFirst, rowLast, collapsed);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
 }

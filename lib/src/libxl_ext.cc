@@ -431,6 +431,22 @@ void _xlSheetSplit(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
+void _xlSheetGroupRows(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t rowFirst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &rowFirst);
+  int64_t rowLast;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &rowLast);
+  int64_t collapsed;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &collapsed);
+  int res = xlSheetGroupRows((SheetHandle) ptr, rowFirst, rowLast, collapsed);
+  Dart_Handle result = Dart_NewBoolean(res != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
 Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {
   if (!Dart_IsString(name)) return NULL;
   Dart_NativeFunction result = NULL;
@@ -464,6 +480,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetSetHorPageBreak", cname) == 0) result = _xlSheetSetHorPageBreak;
   if (strcmp("_xlSheetSetVerPageBreak", cname) == 0) result = _xlSheetSetVerPageBreak;
   if (strcmp("_xlSheetSplit", cname) == 0) result = _xlSheetSplit;
+  if (strcmp("_xlSheetGroupRows", cname) == 0) result = _xlSheetGroupRows;
 
   return result;
 }
