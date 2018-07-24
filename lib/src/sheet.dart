@@ -23,6 +23,7 @@ bool _xlSheetSplit(int ptr, int row, int col) native "_xlSheetSplit";
 bool _xlSheetGroupRows(int ptr, int rowFirst, int rowLast, int collapsed) native "_xlSheetGroupRows";
 bool _xlSheetGroupCols(int ptr, int colFirst, int colLast, int collapsed) native "_xlSheetGroupCols";
 bool _xlSheetSetGroupSummaryBelow(int ptr, int below) native "_xlSheetGroupCols";
+bool _xlSheetSetGroupSummaryRight(int ptr, int right) native "_xlSheetSetGroupSummaryRight";
 
 class XlSheet {
   int ptr;
@@ -190,6 +191,13 @@ class XlSheet {
 
   setGroupSummaryBelow(int below) {
     bool res = _xlSheetSetGroupSummaryBelow(ptr, below);
+    if (!res) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  setGroupSummaryRight(int right) {
+    bool res = _xlSheetSetGroupSummaryRight(ptr, right);
     if (!res) {
       throw XlException(book.errorMessage());
     }
