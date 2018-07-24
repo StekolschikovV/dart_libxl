@@ -475,8 +475,6 @@ void _xlSheetSetGroupSummaryBelow(Dart_NativeArguments args) {
   Dart_ExitScope();
 }
 
-
-
 void _xlSheetSetGroupSummaryRight(Dart_NativeArguments args) {
   Dart_EnterScope();
   int64_t ptr;
@@ -484,6 +482,24 @@ void _xlSheetSetGroupSummaryRight(Dart_NativeArguments args) {
   int64_t right;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &right);
   xlSheetSetGroupSummaryRight((SheetHandle) ptr, right);
+  Dart_Handle result = Dart_NewBoolean(1 != 0);
+  Dart_SetReturnValue(args, result);
+  Dart_ExitScope();
+}
+
+void _xlSheetClear(Dart_NativeArguments args) {
+  Dart_EnterScope();
+  int64_t ptr;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &ptr);
+  int64_t rowFirst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &rowFirst);
+  int64_t rowLast;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 2), &rowLast);
+  int64_t colFirst;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 3), &colFirst);
+  int64_t colLast;
+  Dart_IntegerToInt64(Dart_GetNativeArgument(args, 4), &colLast);
+  xlSheetClear((SheetHandle) ptr, rowFirst, rowLast, colFirst, colLast);
   Dart_Handle result = Dart_NewBoolean(1 != 0);
   Dart_SetReturnValue(args, result);
   Dart_ExitScope();
@@ -526,6 +542,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_sco
   if (strcmp("_xlSheetGroupCols", cname) == 0) result = _xlSheetGroupCols;
   if (strcmp("_xlSheetSetGroupSummaryBelow", cname) == 0) result = _xlSheetSetGroupSummaryBelow;
   if (strcmp("_xlSheetSetGroupSummaryRight", cname) == 0) result = _xlSheetSetGroupSummaryRight;
+  if (strcmp("_xlSheetClear", cname) == 0) result = _xlSheetClear;
 
   return result;
 }
