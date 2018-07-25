@@ -1,5 +1,9 @@
 import 'dart-ext:c/libxl_ext';
 
+part 'book.g.dart';
+part 'sheet.g.dart';
+part 'format.g.dart';
+part 'font.g.dart';
 part 'book.dart';
 part 'sheet.dart';
 

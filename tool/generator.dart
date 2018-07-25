@@ -46,54 +46,38 @@ const cpp2DartTypes = {
   'void': DartType.Void,
 };
 
-List cppFuncNameList = [];
-
 main() {
-  String dirSrc = 'lib/src/c/include_c/';
-  String dirBaseSrc = 'lib/src/c/';
-  String fileName = 'SheetW.h';
-  String moduleName = 'SheetW';
-  generateFor(dirSrc + fileName, moduleName);
-  add__Dart_NativeFunction(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
-
-  replaceWchar_t(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
-}
-replaceWchar_t(String dirBaseSrc, String dirSrc, String fileName, String moduleName){
-  new File(dirBaseSrc + moduleName + '.g.cc')
-      .readAsString()
-      .then((String contents) {
-    contents = contents.replaceAll(new RegExp(r'const wchar_t'), 'const char');
-    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
-  });
-}
-
-add__Dart_NativeFunction(
-    String dirBaseSrc, String dirSrc, String fileName, String moduleName) {
-  new File(dirBaseSrc + moduleName + '.g.cc')
-      .readAsString()
-      .then((String contents) {
-    contents = contents + '\n\n\n';
-    contents = contents +
-        'Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {' +
-        '\n';
-    contents = contents + '  if (!Dart_IsString(name)) return NULL;' + '\n';
-    contents = contents + '  Dart_NativeFunction result = NULL;' + '\n';
-    contents = contents + '  const char* cname;' + '\n';
-    contents = contents + '  HandleError(Dart_StringToCString(name, &cname));';
-
-    for (var i = 0; cppFuncNameList.length > i; i++) {
-      contents = contents +
-          '  if (strcmp("_${cppFuncNameList[i]}", cname) == 0) result = _${cppFuncNameList[i]};\n';
-    }
-
-    contents = contents + '  return result;' + '\n\n';
-    contents = contents + '}' + '\n\n';
-
-    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
-  });
   generateFor('lib/src/c/include_c/BookW.h', 'book');
   generateFor('lib/src/c/include_c/FormatW.h', 'format');
   generateFor('lib/src/c/include_c/FontW.h', 'font');
+  generateFor('lib/src/c/include_c/SheetW.h', 'sheet');
+//  add__Dart_NativeFunction(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+
+//  replaceWchar_t(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+}
+//replaceWchar_t(String dirBaseSrc, String dirSrc, String fileName, String moduleName){
+//  new File(dirBaseSrc + moduleName + '.g.cc')
+//      .readAsString()
+//      .then((String contents) {
+//    contents = contents.replaceAll(new RegExp(r'const wchar_t'), 'const char');
+//    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
+//  });
+//}
+
+generateResolver(
+    StringBuffer output, String moduleName, List<FunctionDescriptor> funcList) {
+  output.writeln(
+      '\n\nDart_NativeFunction ${moduleName}Resolver(const char* cname) {');
+  '\n';
+  output.writeln('  Dart_NativeFunction result = NULL;');
+
+  for (var each in funcList) {
+    output.writeln(
+        '  if (strcmp("_${each.funcName}", cname) == 0) result = _${each.funcName};');
+  }
+
+  output.writeln('  return result;');
+  output.writeln('}');
 }
 
 var regexp = RegExp(r'.*XLAPI(.+)XLAPIENTRY\s+(\w+)\((.*)\);');
@@ -102,13 +86,13 @@ var replaceMap = {'CW(': '(', 'W(': '('};
 generateFor(String fileName, String moduleName) {
   var output = StringBuffer();
   var fileContent = File(fileName).readAsLinesSync();
+  var funcList = <FunctionDescriptor>[];
   for (var each in fileContent) {
     var line = each;
     replaceMap.forEach((key, value) {
       line = line.replaceFirst(key, value);
     });
     var match = regexp.firstMatch(line);
-    var funcList = <FunctionDescriptor>[];
     if (match != null) {
       var params = <ParamDescriptor>[];
       for (var each in match.group(3).split(',')) {
@@ -136,14 +120,18 @@ generateFor(String fileName, String moduleName) {
         ..params = params;
 //      print(desc);
       desc.dartReturnType = cpp2DartTypes[desc.returnType];
-      cppFuncNameList.add(desc.funcName);
-      funcList.add(desc);
+      if (desc.dartReturnType != null &&
+          desc.params.where((pd) => pd.dartType == null).isEmpty) {
+        funcList.add(desc);
+      }
       createCppFunc(output, desc);
     } else {
 //     print('Skipping $line');
     }
   }
+  generateResolver(output, moduleName, funcList);
   File('lib/src/c/$moduleName.g.cc').writeAsStringSync(output.toString());
+  generateDartPart(moduleName, funcList);
 }
 
 createCppFunc(StringBuffer output, FunctionDescriptor desc) {
@@ -173,8 +161,7 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
     if (desc.dartReturnType == DartType.String) {
       returnType = "const char*";
     }
-    output.writeln(
-        '  ${desc.returnType} cResult = ${desc.funcName}($paramNames);');
+    output.writeln('  $returnType cResult = ${desc.funcName}($paramNames);');
   }
 
   switch (resultType) {
@@ -246,4 +233,32 @@ generateParamSection(StringBuffer output, FunctionDescriptor desc) {
     }
     index++;
   }
+}
+
+generateDartPart(String moduleName, List<FunctionDescriptor> funcList) {
+  String dartType2String(DartType dartType) {
+    switch (dartType) {
+      case DartType.String:
+        return 'String';
+      case DartType.int:
+        return 'int';
+      case DartType.Handle:
+        return 'int';
+      case DartType.num:
+        return 'num';
+      case DartType.bool:
+        return 'bool';
+      case DartType.Void:
+        return 'void';
+    }
+  }
+
+  var output = new StringBuffer();
+  output.writeln("part of 'libxl_ext.dart';\n\n");
+  for (var each in funcList) {
+    var params = each.params.map((pd) => '${dartType2String(pd.dartType)} ${pd.paramName}').join(', ');
+    output.writeln(
+        '  ${dartType2String(each.dartReturnType)} _${each.funcName}($params) native "_${each.funcName}";');
+  }
+  File('lib/src/$moduleName.g.dart').writeAsStringSync(output.toString());
 }

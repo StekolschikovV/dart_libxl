@@ -1,12 +1,14 @@
 part of 'libxl_ext.dart';
 
-bool _xlSheetWriteStr(int ptr, int row, int col, String value) native "_xlSheetWriteStr";
-bool _xlSheetWriteNum(int ptr, int row, int col, double value) native "_xlSheetWriteNum";
-
 class XlSheet {
-  int ptr;
-  XlBook book;
+  final int ptr;
+  final XlBook book;
+
   XlSheet(this.ptr, this.book);
+
+  const XlSheet.empty()
+      : ptr = 0,
+        book = const XlBook.empty();
 
   @override
   String toString() {
@@ -14,17 +16,16 @@ class XlSheet {
   }
 
   writeStr(int row, int col, String value) {
-    bool res = _xlSheetWriteStr(ptr, row, col, value);
-    if (!res) {
+    var res = _xlSheetWriteStr(ptr, row, col, value, 0);
+    if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
   writeNum(int row, int col, double value) {
-    bool res = _xlSheetWriteNum(ptr, row, col, value);
-    if (!res) {
+    var res = _xlSheetWriteNum(ptr, row, col, value, 0);
+    if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
-
 }
