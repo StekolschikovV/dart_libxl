@@ -15,7 +15,7 @@ main() {
   sheet.writeStr(3,1,'World');
   sheet.writeNum(1,0,1.1);
   sheet.writeNum(1,0,555.0);
-  book.addSheet('CopySheet', initSheet: sheet);
+  book.addSheet('CopySheet', sheet);
   var fileName = 'test.xls';
   book.save(fileName);
   print('File $fileName was created successfully');

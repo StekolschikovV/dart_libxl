@@ -36,7 +36,7 @@ class XlBook {
   }
 
   XlSheet addSheet(String sheetName,
-      {XlSheet initSheet = const XlSheet.empty()}) {
+      [XlSheet initSheet = const XlSheet.empty()]) {
     int sheetPointer = _xlBookAddSheet(ptr, sheetName, initSheet.ptr);
     if (sheetPointer == 0) {
       throw XlException(errorMessage());
