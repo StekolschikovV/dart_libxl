@@ -23,6 +23,7 @@ class ParamDescriptor {
 class FunctionDescriptor {
   String source;
   String returnType;
+  DartType dartReturnType;
   String funcName;
   List<String> rawParams = <String>[];
   List<ParamDescriptor> params = <ParamDescriptor>[];
@@ -36,7 +37,8 @@ class FunctionDescriptor {
 const cpp2DartTypes = {
   'BookHandle': DartType.Handle,
   'SheetHandle': DartType.Handle,
-//  'FormatHandle': DartType.Handle,
+  'FormatHandle': DartType.Handle,
+  'FontHandle': DartType.Handle,
   'const wchar_t*': DartType.String,
   'const char*': DartType.String,
   'int': DartType.int,
@@ -46,6 +48,8 @@ const cpp2DartTypes = {
 
 main() {
   generateFor('lib/src/c/include_c/BookW.h', 'book');
+  generateFor('lib/src/c/include_c/FormatW.h', 'format');
+  generateFor('lib/src/c/include_c/FontW.h', 'font');
 }
 
 var regexp = RegExp(r'.*XLAPI(.+)XLAPIENTRY\s+(\w+)\((.*)\);');
@@ -87,6 +91,7 @@ generateFor(String fileName, String moduleName) {
         ..funcName = match.group(2).trim()
         ..params = params;
 //      print(desc);
+      desc.dartReturnType = cpp2DartTypes[desc.returnType];
       funcList.add(desc);
       createCppFunc(output, desc);
     } else {
@@ -117,8 +122,12 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
   if (resultType == DartType.Void) {
     output.writeln('  ${desc.funcName}($paramNames);');
   } else {
+    var returnType = desc.returnType;
+    if (desc.dartReturnType == DartType.String) {
+      returnType = "const char*";
+    }
     output.writeln(
-        '  ${desc.returnType} cResult = ${desc.funcName}($paramNames);');
+        '  ${returnType} cResult = ${desc.funcName}($paramNames);');
   }
   switch (resultType) {
     case DartType.Handle:

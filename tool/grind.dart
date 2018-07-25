@@ -4,7 +4,7 @@ main(args) => grind(args);
 
 @DefaultTask('Build the project.')
 build() {
-//  runDartScript('tool/generator.dart');
+  runDartScript('tool/generator.dart');
   var moduleName = 'libxl_ext';
   _createLib(moduleName);
   runDartScript('bin/example.dart');

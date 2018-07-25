@@ -4,6 +4,8 @@
 #include <string.h>
 #include <dart_api.h>
 #include "book.g.cc"
+#include "format.g.cc"
+#include "font.g.cc"
 
 //      std::cout << "!!!!\n";
 //      std::cout << value << "\n";
