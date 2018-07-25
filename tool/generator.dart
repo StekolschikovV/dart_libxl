@@ -46,7 +46,51 @@ const cpp2DartTypes = {
   'void': DartType.Void,
 };
 
+List cppFuncNameList = [];
+
 main() {
+  String dirSrc = 'lib/src/c/include_c/';
+  String dirBaseSrc = 'lib/src/c/';
+  String fileName = 'SheetW.h';
+  String moduleName = 'SheetW';
+  generateFor(dirSrc + fileName, moduleName);
+  add__Dart_NativeFunction(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+
+  replaceWchar_t(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+}
+replaceWchar_t(String dirBaseSrc, String dirSrc, String fileName, String moduleName){
+  new File(dirBaseSrc + moduleName + '.g.cc')
+      .readAsString()
+      .then((String contents) {
+    contents = contents.replaceAll(new RegExp(r'const wchar_t'), 'const char');
+    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
+  });
+}
+
+add__Dart_NativeFunction(
+    String dirBaseSrc, String dirSrc, String fileName, String moduleName) {
+  new File(dirBaseSrc + moduleName + '.g.cc')
+      .readAsString()
+      .then((String contents) {
+    contents = contents + '\n\n\n';
+    contents = contents +
+        'Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool* auto_setup_scope) {' +
+        '\n';
+    contents = contents + '  if (!Dart_IsString(name)) return NULL;' + '\n';
+    contents = contents + '  Dart_NativeFunction result = NULL;' + '\n';
+    contents = contents + '  const char* cname;' + '\n';
+    contents = contents + '  HandleError(Dart_StringToCString(name, &cname));';
+
+    for (var i = 0; cppFuncNameList.length > i; i++) {
+      contents = contents +
+          '  if (strcmp("_${cppFuncNameList[i]}", cname) == 0) result = _${cppFuncNameList[i]};\n';
+    }
+
+    contents = contents + '  return result;' + '\n\n';
+    contents = contents + '}' + '\n\n';
+
+    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
+  });
   generateFor('lib/src/c/include_c/BookW.h', 'book');
   generateFor('lib/src/c/include_c/FormatW.h', 'format');
   generateFor('lib/src/c/include_c/FontW.h', 'font');
@@ -92,6 +136,7 @@ generateFor(String fileName, String moduleName) {
         ..params = params;
 //      print(desc);
       desc.dartReturnType = cpp2DartTypes[desc.returnType];
+      cppFuncNameList.add(desc.funcName);
       funcList.add(desc);
       createCppFunc(output, desc);
     } else {
@@ -103,6 +148,7 @@ generateFor(String fileName, String moduleName) {
 
 createCppFunc(StringBuffer output, FunctionDescriptor desc) {
   var resultType = cpp2DartTypes[desc.returnType];
+
   if (resultType == null) {
     print('Unknown result type in ${desc.source}');
     return;
@@ -110,6 +156,7 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
   if (desc.params.where((pd) => pd.dartType == null).isNotEmpty) {
     print('Unknown parameter type in ${desc.source}');
   }
+
   output.writeln('void _${desc.funcName}(Dart_NativeArguments args) {');
   output.writeln('  Dart_EnterScope();');
   generateParamSection(output, desc);
@@ -127,8 +174,9 @@ createCppFunc(StringBuffer output, FunctionDescriptor desc) {
       returnType = "const char*";
     }
     output.writeln(
-        '  ${returnType} cResult = ${desc.funcName}($paramNames);');
+        '  ${desc.returnType} cResult = ${desc.funcName}($paramNames);');
   }
+
   switch (resultType) {
     case DartType.Handle:
       output.writeln(
