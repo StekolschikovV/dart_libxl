@@ -4,6 +4,7 @@ main() {
   print('------------------------------------');
   print('Start example');
   var book = new XlBook();
+  var font = new XlFont();
   try {
     var notASheet = book.getSheet(0);
   } catch(error) {

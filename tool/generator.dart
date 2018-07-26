@@ -260,5 +260,7 @@ generateDartPart(String moduleName, List<FunctionDescriptor> funcList) {
     output.writeln(
         '  ${dartType2String(each.dartReturnType)} _${each.funcName}($params) native "_${each.funcName}";');
   }
+
+  print("----------------------");
   File('lib/src/$moduleName.g.dart').writeAsStringSync(output.toString());
 }

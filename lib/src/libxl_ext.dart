@@ -4,6 +4,7 @@ part 'book.g.dart';
 part 'sheet.g.dart';
 part 'format.g.dart';
 part 'font.g.dart';
+part 'font.dart';
 part 'book.dart';
 part 'sheet.dart';
 
