@@ -43,4 +43,8 @@ class XlBook {
     }
     return XlSheet(sheetPointer, this);
   }
+
+  addFormat({int initFormat = 0}){
+    return _xlBookAddFormat(ptr, initFormat);
+  }
 }
