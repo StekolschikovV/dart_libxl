@@ -2,6 +2,7 @@ part of 'libxl_ext.dart';
 
 class XlSheet {
   final int ptr;
+  final int format;
   final XlBook book;
 
   XlSheet(this.ptr, this.book);
@@ -15,57 +16,57 @@ class XlSheet {
     return 'XlSheet{ptr: $ptr}';
   }
 
-  writeStr(int row, int col, String value, [var format = 0]) {
-    var res = _xlSheetWriteStr(ptr, row, col, value, format == 0 ? 0 : format.ptr);
+  writeStr(int row, int col, String value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteStr(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeNum(int row, int col, double value, [var format = 0]) {
-    var res = _xlSheetWriteNum(ptr, row, col, value, format == 0 ? 0 : format.ptr);
+  writeNum(int row, int col, double value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteNum(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeBool(int row, int col, int value, [var format = 0]) {
-    var res = _xlSheetWriteBool(ptr, row, col, value, format == 0 ? 0 : format.ptr);
+  writeBool(int row, int col, int value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteBool(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeBlank(int row, int col, [var format = 0]) {
-    var res = _xlSheetWriteBlank(ptr, row, col, format == 0 ? 0 : format.ptr);
+  writeBlank(int row, int col, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteBlank(ptr, row, col, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormula(int row, int col, String value, [var format = 0]) {
-    var res = _xlSheetWriteFormula(ptr, row, col, value, format == 0 ? 0 : format.ptr);
+  writeFormula(int row, int col, String value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteFormula(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaNum(int row, int col, String expr, num value, [var format = 0]) {
-    var res = _xlSheetWriteFormulaNum(ptr, row, col, expr, value, format == 0 ? 0 : format.ptr);
+  writeFormulaNum(int row, int col, String expr, num value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteFormulaNum(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaStr(int row, int col, String expr, String value, [var format = 0]) {
-    var res = _xlSheetWriteFormulaStr(ptr, row, col, expr, value, format == 0 ? 0 : format.ptr);
+  writeFormulaStr(int row, int col, String expr, String value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteFormulaStr(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaBool(int row, int col, String expr, int value, [var format = 0]) {
-    var res = _xlSheetWriteFormulaBool(ptr, row, col, expr, value, format == 0 ? 0 : format.ptr);
+  writeFormulaBool(int row, int col, String expr, int value, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetWriteFormulaBool(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
@@ -75,19 +76,19 @@ class XlSheet {
     _xlSheetWriteComment(ptr, row, col, value, author, width, height);
   }
 
-  writeError(int row, int col, int error, [var format = 0]) {
-    _xlSheetWriteError(ptr, row, col, error, format == 0 ? 0 : format.ptr);
+  writeError(int row, int col, int error, [XlFormat format = const XlFormat.empty()]) {
+    _xlSheetWriteError(ptr, row, col, error, format.ptr);
   }
 
-  setCol(int colFirst, int colLast, num width, int hidden, [var format = 0]) {
-    var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format == 0 ? 0 : format.ptr, hidden);
+  setCol(int colFirst, int colLast, num width, int hidden, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, hidden);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  setRow(int row, num height, int hidden, [var format = 0]) {
-    var res = _xlSheetSetRow(ptr, row,  height, format == 0 ? 0 : format.ptr,  hidden);
+  setRow(int row, num height, int hidden, [XlFormat format = const XlFormat.empty()]) {
+    var res = _xlSheetSetRow(ptr, row,  height, format.ptr,  hidden);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
