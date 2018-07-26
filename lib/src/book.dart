@@ -45,6 +45,8 @@ class XlBook {
   }
 
   addFormat({int initFormat = 0}){
-    return _xlBookAddFormat(ptr, initFormat);
+    var f = _xlBookAddFormat(ptr, initFormat);
+    var format = new XlFormat(f, this);
+    return format;
   }
 }

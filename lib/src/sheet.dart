@@ -15,15 +15,15 @@ class XlSheet {
     return 'XlSheet{ptr: $ptr}';
   }
 
-  writeStr(int row, int col, String value) {
-    var res = _xlSheetWriteStr(ptr, row, col, value, 0);
+  writeStr(int row, int col, String value, [var f = 0]) {
+    var res = _xlSheetWriteStr(ptr, row, col, value, f == 0 ? 0 : f.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeNum(int row, int col, double value) {
-    var res = _xlSheetWriteNum(ptr, row, col, value, 0);
+  writeNum(int row, int col, double value, [var f = 0]) {
+    var res = _xlSheetWriteNum(ptr, row, col, value, f == 0 ? 0 : f.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
