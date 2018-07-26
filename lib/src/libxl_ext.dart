@@ -3,6 +3,7 @@ import 'dart-ext:c/libxl_ext';
 part 'book.g.dart';
 part 'sheet.g.dart';
 part 'format.g.dart';
+part 'format.dart';
 part 'font.g.dart';
 part 'font.dart';
 part 'book.dart';

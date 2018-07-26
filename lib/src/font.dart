@@ -11,10 +11,7 @@ class XlFont {
   }
 
   fontSize() {
-    var res = _xlFontSize(ptr);
-    if (res == 0) {
-      throw XlException('_xlFontSize');
-    }
+    return _xlFontSize(ptr);
   }
 
   setSize(int size) {
@@ -22,10 +19,7 @@ class XlFont {
   }
 
   fontItalic(int size) {
-    var res = _xlFontItalic(ptr);
-    if (res == 0) {
-      throw XlException('_xlFontItalic');
-    }
+    return _xlFontItalic(ptr);
   }
 
   setItalic(int italic) {
@@ -33,10 +27,7 @@ class XlFont {
   }
 
   fontStrikeOut(int size) {
-    var res = _xlFontStrikeOut(ptr);
-    if (res == 0) {
-      throw XlException('_xlFontStrikeOut');
-    }
+    return _xlFontStrikeOut(ptr);
   }
 
   fontSetStrikeOut(int strikeOut) {
