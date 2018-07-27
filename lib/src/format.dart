@@ -1,7 +1,6 @@
 part of 'libxl_ext.dart';
 
 class XlFormat {
-
   final int ptr;
   final XlBook book;
 
@@ -16,210 +15,209 @@ class XlFormat {
     return 'XlFormat{ptr: $ptr}';
   }
 
-  formatFont(){
+  font() {
     return _xlFormatFont(ptr);
   }
 
-  formatSetFont(int fontHandle){
+  setFont(int fontHandle) {
     var res = _xlFormatSetFont(ptr, fontHandle);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  formatNumFormat(){
+  numFormat() {
     return _xlFormatNumFormat(ptr);
   }
 
-  formatSetNumFormat(int numFormat){
+  setNumFormat(int numFormat) {
     _xlFormatSetNumFormat(ptr, numFormat);
   }
 
-  formatAlignH(int numFormat){
+  alignH(int numFormat) {
     return _xlFormatAlignH(ptr);
   }
 
-  formatSetAlignH(int align){
+  setAlignH(int align) {
     _xlFormatSetAlignH(ptr, align);
   }
 
-  formatAlignV(int align){
+  alignV(int align) {
     return _xlFormatAlignV(ptr);
   }
 
-  formatSetAlignV(int align){
+  setAlignV(int align) {
     _xlFormatSetAlignV(ptr, align);
   }
 
-  formatWrap(){
+  wrap() {
     return _xlFormatWrap(ptr);
   }
 
-  formatSetWrap(int wrap){
+  setWrap(int wrap) {
     _xlFormatSetWrap(ptr, wrap);
   }
 
-  formatRotation(){
+  rotation() {
     return _xlFormatRotation(ptr);
   }
 
-  formatSetRotation(int rotation){
-    var res =_xlFormatSetRotation(ptr, rotation);
+  setRotation(int rotation) {
+    var res = _xlFormatSetRotation(ptr, rotation);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  formatIndent(){
+  indent() {
     return _xlFormatIndent(ptr);
   }
 
-  formatSetIndent(int indent){
+  setIndent(int indent) {
     _xlFormatSetIndent(ptr, indent);
   }
 
-  formatShrinkToFit(int indent){
+  shrinkToFit(int indent) {
     return _xlFormatShrinkToFit(ptr);
   }
 
-  formatSetShrinkToFit(int shrinkToFit){
+  setShrinkToFit(int shrinkToFit) {
     _xlFormatSetShrinkToFit(ptr, shrinkToFit);
   }
 
-  formatSetBorder(int style){
+  setBorder(int style) {
     _xlFormatSetBorder(ptr, style);
   }
 
-  formatSetBorderColor(int color){
+  setBorderColor(int color) {
     _xlFormatSetBorderColor(ptr, color);
   }
 
-  formatBorderLeft(){
+  borderLeft() {
     return _xlFormatBorderLeft(ptr);
   }
 
-  formatSetBorderLeft(int style){
+  setBorderLeft(int style) {
     _xlFormatSetBorderLeft(ptr, style);
   }
 
-  formatBorderRight(){
+  borderRight() {
     return _xlFormatBorderRight(ptr);
   }
 
-  formatSetBorderRight(int style){
+  setBorderRight(int style) {
     _xlFormatSetBorderRight(ptr, style);
   }
 
-  formatBorderTop(){
+  borderTop() {
     return _xlFormatBorderTop(ptr);
   }
 
-  formatSetBorderTop(int style){
+  setBorderTop(int style) {
     _xlFormatSetBorderTop(ptr, style);
   }
 
-  formatBorderBottom(){
+  borderBottom() {
     return _xlFormatBorderBottom(ptr);
   }
 
-  formatSetBorderBottom(int style){
+  setBorderBottom(int style) {
     _xlFormatSetBorderBottom(ptr, style);
   }
 
-  formatBorderLeftColor(){
+  borderLeftColor() {
     return _xlFormatBorderLeftColor(ptr);
   }
 
-  formatSetBorderLeftColor(int color){
+  setBorderLeftColor(int color) {
     _xlFormatSetBorderLeftColor(ptr, color);
   }
 
-  formatBorderRightColor(){
+  borderRightColor() {
     return _xlFormatBorderRightColor(ptr);
   }
 
-  formatSetBorderRightColor(int color){
+  setBorderRightColor(int color) {
     _xlFormatSetBorderRightColor(ptr, color);
   }
 
-  formatBorderTopColor(){
+  borderTopColor() {
     return _xlFormatBorderTopColor(ptr);
   }
 
-  formatSetBorderTopColor(int color){
+  setBorderTopColor(int color) {
     _xlFormatSetBorderTopColor(ptr, color);
   }
 
-  formatBorderBottomColor(){
+  borderBottomColor() {
     return _xlFormatBorderBottomColor(ptr);
   }
 
-  formatSetBorderBottomColor(int color){
+  setBorderBottomColor(int color) {
     _xlFormatSetBorderBottomColor(ptr, color);
   }
 
-  formatBorderDiagonal(){
+  borderDiagonal() {
     return _xlFormatBorderDiagonal(ptr);
   }
 
-  formatSetBorderDiagonal(int border){
+  setBorderDiagonal(int border) {
     _xlFormatSetBorderDiagonal(ptr, border);
   }
 
-  formatBorderDiagonalStyle(){
+  borderDiagonalStyle() {
     return _xlFormatBorderDiagonalStyle(ptr);
   }
 
-  formatSetBorderDiagonalStyle(int style){
+  setBorderDiagonalStyle(int style) {
     _xlFormatSetBorderDiagonalStyle(ptr, style);
   }
 
-  formatBorderDiagonalColor(){
+  borderDiagonalColor() {
     return _xlFormatBorderDiagonalColor(ptr);
   }
 
-  formatSetBorderDiagonalColor(int style){
+  setBorderDiagonalColor(int style) {
     _xlFormatSetBorderDiagonalColor(ptr, style);
   }
 
-  formatFillPattern(){
+  fillPattern() {
     return _xlFormatFillPattern(ptr);
   }
 
-  formatSetFillPattern(int pattern){
+  setFillPattern(int pattern) {
     _xlFormatSetFillPattern(ptr, pattern);
   }
 
-  formatPatternForegroundColor(){
+  patternForegroundColor() {
     return _xlFormatPatternForegroundColor(ptr);
   }
 
-  formatSetPatternForegroundColor(int color){
+  setPatternForegroundColor(int color) {
     _xlFormatSetPatternForegroundColor(ptr, color);
   }
 
-  formatPatternBackgroundColor(){
+  patternBackgroundColor() {
     return _xlFormatPatternBackgroundColor(ptr);
   }
 
-  formatSetPatternBackgroundColor(int color){
+  setPatternBackgroundColor(int color) {
     _xlFormatSetPatternBackgroundColor(ptr, color);
   }
 
-  formatLocked(){
+  locked() {
     return _xlFormatLocked(ptr);
   }
 
-  formatSetLocked(int locked){
+  setLocked(int locked) {
     _xlFormatSetLocked(ptr, locked);
   }
 
-  formatHidden(){
+  hidden() {
     return _xlFormatHidden(ptr);
   }
 
-  formatSetHidden(int hidden){
+  setHidden(int hidden) {
     _xlFormatSetHidden(ptr, hidden);
   }
-
 }
