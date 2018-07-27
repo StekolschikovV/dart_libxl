@@ -2,7 +2,6 @@ part of 'libxl_ext.dart';
 
 class XlSheet {
   final int ptr;
-  final int format;
   final XlBook book;
 
   XlSheet(this.ptr, this.book);

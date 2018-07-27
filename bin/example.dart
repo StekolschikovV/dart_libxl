@@ -27,6 +27,7 @@ main() {
   var format = book.addFormat();
   format.setBorderBottom(3);
   format.setAlignH(3);
+  format.setRotation(1);
   sheet.writeStr(3,1,'World',format);
 
   var formatCopy = book.addFormat(initFormat: format);

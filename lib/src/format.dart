@@ -19,7 +19,7 @@ class XlFormat {
     return _xlFormatFont(ptr);
   }
 
-  setFont(int fontHandle) {
+  void setFont(int fontHandle) {
     var res = _xlFormatSetFont(ptr, fontHandle);
     if (res == 0) {
       throw XlException(book.errorMessage());
@@ -30,7 +30,7 @@ class XlFormat {
     return _xlFormatNumFormat(ptr);
   }
 
-  setNumFormat(int numFormat) {
+  void setNumFormat(int numFormat) {
     _xlFormatSetNumFormat(ptr, numFormat);
   }
 
@@ -38,7 +38,7 @@ class XlFormat {
     return _xlFormatAlignH(ptr);
   }
 
-  setAlignH(int align) {
+  void setAlignH(int align) {
     _xlFormatSetAlignH(ptr, align);
   }
 
@@ -46,7 +46,7 @@ class XlFormat {
     return _xlFormatAlignV(ptr);
   }
 
-  setAlignV(AlignH align) {
+  void setAlignV(AlignH align) {
     _xlFormatSetAlignV(ptr, align.value);
   }
 
@@ -54,7 +54,7 @@ class XlFormat {
     return _xlFormatWrap(ptr);
   }
 
-  setWrap(int wrap) {
+  void setWrap(int wrap) {
     _xlFormatSetWrap(ptr, wrap);
   }
 
@@ -62,18 +62,15 @@ class XlFormat {
     return _xlFormatRotation(ptr);
   }
 
-  setRotation(int rotation) {
-    var res = _xlFormatSetRotation(ptr, rotation);
-    if (res == 0) {
-      throw XlException(book.errorMessage());
-    }
+  void setRotation(int rotation) {
+    _xlFormatSetRotation(ptr, rotation);
   }
 
   indent() {
     return _xlFormatIndent(ptr);
   }
 
-  setIndent(int indent) {
+  void setIndent(int indent) {
     _xlFormatSetIndent(ptr, indent);
   }
 
@@ -81,15 +78,15 @@ class XlFormat {
     return _xlFormatShrinkToFit(ptr);
   }
 
-  setShrinkToFit(int shrinkToFit) {
+  void setShrinkToFit(int shrinkToFit) {
     _xlFormatSetShrinkToFit(ptr, shrinkToFit);
   }
 
-  setBorder(int style) {
+  void setBorder(int style) {
     _xlFormatSetBorder(ptr, style);
   }
 
-  setBorderColor(int color) {
+  void setBorderColor(int color) {
     _xlFormatSetBorderColor(ptr, color);
   }
 
@@ -97,7 +94,7 @@ class XlFormat {
     return _xlFormatBorderLeft(ptr);
   }
 
-  setBorderLeft(int style) {
+  void setBorderLeft(int style) {
     _xlFormatSetBorderLeft(ptr, style);
   }
 
@@ -105,7 +102,7 @@ class XlFormat {
     return _xlFormatBorderRight(ptr);
   }
 
-  setBorderRight(int style) {
+  void setBorderRight(int style) {
     _xlFormatSetBorderRight(ptr, style);
   }
 
@@ -113,7 +110,7 @@ class XlFormat {
     return _xlFormatBorderTop(ptr);
   }
 
-  setBorderTop(int style) {
+  void setBorderTop(int style) {
     _xlFormatSetBorderTop(ptr, style);
   }
 
@@ -121,7 +118,7 @@ class XlFormat {
     return _xlFormatBorderBottom(ptr);
   }
 
-  setBorderBottom(int style) {
+  void setBorderBottom(int style) {
     _xlFormatSetBorderBottom(ptr, style);
   }
 
@@ -129,7 +126,7 @@ class XlFormat {
     return _xlFormatBorderLeftColor(ptr);
   }
 
-  setBorderLeftColor(int color) {
+  void setBorderLeftColor(int color) {
     _xlFormatSetBorderLeftColor(ptr, color);
   }
 
@@ -137,7 +134,7 @@ class XlFormat {
     return _xlFormatBorderRightColor(ptr);
   }
 
-  setBorderRightColor(int color) {
+  void setBorderRightColor(int color) {
     _xlFormatSetBorderRightColor(ptr, color);
   }
 
@@ -145,7 +142,7 @@ class XlFormat {
     return _xlFormatBorderTopColor(ptr);
   }
 
-  setBorderTopColor(int color) {
+  void setBorderTopColor(int color) {
     _xlFormatSetBorderTopColor(ptr, color);
   }
 
@@ -153,7 +150,7 @@ class XlFormat {
     return _xlFormatBorderBottomColor(ptr);
   }
 
-  setBorderBottomColor(int color) {
+  void setBorderBottomColor(int color) {
     _xlFormatSetBorderBottomColor(ptr, color);
   }
 
@@ -161,7 +158,7 @@ class XlFormat {
     return _xlFormatBorderDiagonal(ptr);
   }
 
-  setBorderDiagonal(int border) {
+  void setBorderDiagonal(int border) {
     _xlFormatSetBorderDiagonal(ptr, border);
   }
 
@@ -169,7 +166,7 @@ class XlFormat {
     return _xlFormatBorderDiagonalStyle(ptr);
   }
 
-  setBorderDiagonalStyle(int style) {
+  void setBorderDiagonalStyle(int style) {
     _xlFormatSetBorderDiagonalStyle(ptr, style);
   }
 
@@ -177,7 +174,7 @@ class XlFormat {
     return _xlFormatBorderDiagonalColor(ptr);
   }
 
-  setBorderDiagonalColor(int style) {
+  void setBorderDiagonalColor(int style) {
     _xlFormatSetBorderDiagonalColor(ptr, style);
   }
 
@@ -185,7 +182,7 @@ class XlFormat {
     return _xlFormatFillPattern(ptr);
   }
 
-  setFillPattern(int pattern) {
+  void setFillPattern(int pattern) {
     _xlFormatSetFillPattern(ptr, pattern);
   }
 
@@ -193,7 +190,7 @@ class XlFormat {
     return _xlFormatPatternForegroundColor(ptr);
   }
 
-  setPatternForegroundColor(int color) {
+  void setPatternForegroundColor(int color) {
     _xlFormatSetPatternForegroundColor(ptr, color);
   }
 
@@ -201,7 +198,7 @@ class XlFormat {
     return _xlFormatPatternBackgroundColor(ptr);
   }
 
-  setPatternBackgroundColor(int color) {
+  void setPatternBackgroundColor(int color) {
     _xlFormatSetPatternBackgroundColor(ptr, color);
   }
 
@@ -209,7 +206,7 @@ class XlFormat {
     return _xlFormatLocked(ptr);
   }
 
-  setLocked(int locked) {
+  void setLocked(int locked) {
     _xlFormatSetLocked(ptr, locked);
   }
 
@@ -217,7 +214,7 @@ class XlFormat {
     return _xlFormatHidden(ptr);
   }
 
-  setHidden(int hidden) {
+  void setHidden(int hidden) {
     _xlFormatSetHidden(ptr, hidden);
   }
 }

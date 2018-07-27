@@ -5,6 +5,8 @@ class XlFont {
 
   final int ptr;
 
+  XlFont() : ptr = 0;
+
   @override
   String toString() {
     return 'XlFont{ptr: $ptr}';
