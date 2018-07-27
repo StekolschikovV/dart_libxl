@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:args/args.dart';
+
+import './src/stringWorker.dart';
 
 enum DartType {
   int,
@@ -46,23 +49,29 @@ const cpp2DartTypes = {
   'void': DartType.Void,
 };
 
-main() {
-  generateFor('lib/src/c/include_c/BookW.h', 'book');
-  generateFor('lib/src/c/include_c/FormatW.h', 'format');
-  generateFor('lib/src/c/include_c/FontW.h', 'font');
-  generateFor('lib/src/c/include_c/SheetW.h', 'sheet');
-//  add__Dart_NativeFunction(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
 
-//  replaceWchar_t(dirBaseSrc, dirSrc, dirSrc + fileName, moduleName);
+main(List<String> arguments) {
+
+  var parser = new ArgParser();
+  parser.addOption('mode');
+  var results = parser.parse(arguments);
+
+  var stringWorker = new StringWorker();
+
+  //stringWorker.say();
+
+  switch (results['mode']) {
+    case 'ALL':
+      break;
+    default:
+      generateFor('lib/src/c/include_c/BookW.h', 'book');
+      generateFor('lib/src/c/include_c/FormatW.h', 'format');
+      generateFor('lib/src/c/include_c/FontW.h', 'font');
+      generateFor('lib/src/c/include_c/SheetW.h', 'sheet');
+  }
+
 }
-//replaceWchar_t(String dirBaseSrc, String dirSrc, String fileName, String moduleName){
-//  new File(dirBaseSrc + moduleName + '.g.cc')
-//      .readAsString()
-//      .then((String contents) {
-//    contents = contents.replaceAll(new RegExp(r'const wchar_t'), 'const char');
-//    File('lib/src/c/$moduleName.g.cc').writeAsStringSync(contents.toString());
-//  });
-//}
+
 
 generateResolver(
     StringBuffer output, String moduleName, List<FunctionDescriptor> funcList) {
