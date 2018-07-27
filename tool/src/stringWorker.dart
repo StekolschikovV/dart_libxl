@@ -40,10 +40,11 @@ class StringWorker{
 
           //print(title.split(' = ')[1]);
            val = int.tryParse(title.split(' = ')[1]) ?? null;
+
            //val2 = null;
           //print(val);
-          //if(val != null){
-          //  ii = val;
+         //if(val != null){
+            ii = val;
          // } else {
           //  val2 = title.split(' = ')[1];
          // }
