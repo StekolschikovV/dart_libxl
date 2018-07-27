@@ -44,8 +44,8 @@ class XlBook {
     return XlSheet(sheetPointer, this);
   }
 
-  addFormat({int initFormat = 0}){
-    var f = _xlBookAddFormat(ptr, initFormat);
+  XlFormat addFormat({XlFormat initFormat = const XlFormat.empty()}){
+    var f = _xlBookAddFormat(ptr, initFormat.ptr);
     var format = new XlFormat(f, this);
     return format;
   }

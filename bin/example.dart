@@ -19,16 +19,22 @@ main() {
 //  etBorder(100);
 
   print('Sheet added');
-  sheet.writeStr(3,1,'World');
-
-  sheet.writeNum(1,0,555.0);
-
-
+  sheet.writeStr(3,0,'Hello');
   var format = book.addFormat();
   format.formatSetBorderBottom(3);
-  format.formatSetRotation(1);
-  sheet.writeNum(1,0,1.1,format);
-  sheet.writeStr(3,0,'Hello',format);
+  format.formatSetAlignH(3);
+  sheet.writeStr(3,1,'World',format);
+
+  var formatCopy = book.addFormat(initFormat: format);
+  formatCopy.formatAlignV(0);
+  sheet.writeNum(1,0,555.0, formatCopy);
+
+
+//  var format = book.addFormat();
+//  format.formatSetBorderBottom(3);
+//  format.formatSetRotation(1);
+//  sheet.writeNum(1,0,1.1,format);
+//  sheet.writeStr(3,0,'Hello',format);
 
 
   book.addSheet('CopySheet', sheet);
