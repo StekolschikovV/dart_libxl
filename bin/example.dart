@@ -19,7 +19,11 @@ main() {
 //  etBorder(100);
 
   print('Sheet added');
-  sheet.writeStr(3,0,'Hello');
+  sheet.writeStr(3,1,'World');
+
+  sheet.writeNum(1,0,555.0);
+
+
   var format = book.addFormat();
   format.formatSetBorderBottom(3);
   format.formatSetAlignH(3);
