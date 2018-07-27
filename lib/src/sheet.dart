@@ -118,7 +118,7 @@ class XlSheet {
     _xlSheetSetPicture(ptr, row, col, pictureId, scale, offset_x, offset_y, pos);
   }
 
-  setPicture2(int handle, int row, int col, int pictureId, int width, int height, int offset_x, int offset_y, int pos) {
+  setPicture2(int row, int col, int pictureId, int width, int height, int offset_x, int offset_y, int pos) {
     _xlSheetSetPicture2(ptr, row, col, pictureId, width, height, offset_x, offset_y, pos);
   }
 
@@ -150,10 +150,6 @@ class XlSheet {
 
   setPrintGridlines(int print) {
     _xlSheetSetPrintGridlines(ptr, print);
-  }
-
-  setZoom(int zoom) {
-    _xlSheetSetPrintGridlines(ptr, zoom);
   }
 
   setPrintZoom(int zoom) {
@@ -270,6 +266,324 @@ class XlSheet {
 
   setTabRgbColor(int red, int green, int blue) {
     _xlSheetSetTabRgbColor(ptr, red, green, blue);
+  }
+
+  int cellType(int row, int col){
+    return _xlSheetCellType(ptr, row, col);
+  }
+
+  int isFormula(int row, int col){
+    return _xlSheetIsFormula(ptr, row, col);
+  }
+
+  int cellFormat(int row, int col){
+    return _xlSheetCellFormat(ptr, row, col);
+  }
+
+  void setCellFormat(int row, int col, int format){
+    _xlSheetSetCellFormat(ptr, row, col, format);
+  }
+
+  String readComment(int row, int col){
+    return _xlSheetReadComment(ptr, row, col);
+  }
+
+  void removeComment(int row, int col){
+    _xlSheetRemoveComment(ptr, row, col);
+  }
+
+  int isDate(int row, int col){
+    return _xlSheetIsDate(ptr, row, col);
+  }
+
+  int readError(int row, int col){
+    return _xlSheetReadError(ptr, row, col);
+  }
+
+  num colWidth(int col){
+    return _xlSheetColWidth(ptr, col);
+  }
+
+  num rowWidth(int row){
+    return _xlSheetRowHeight(ptr, row);
+  }
+
+  int rowHidden(int row){
+    return _xlSheetRowHidden(ptr, row);
+  }
+
+  int colHidden(int col){
+    return _xlSheetColHidden(ptr, col);
+  }
+
+  void delMerge(int row, int col){
+    var res = _xlSheetDelMerge(ptr, row, col);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  int mergeSize(){
+    return _xlSheetMergeSize(ptr);
+  }
+
+  int delMergeByIndex(int index){
+    return _xlSheetDelMergeByIndex(ptr, index);
+  }
+
+  int pictureSize(){
+    return _xlSheetPictureSize(ptr);
+  }
+
+  int getHorPageBreak(int index){
+    return _xlSheetGetHorPageBreak(ptr, index);
+  }
+
+  int getHorPageBreakSize(){
+    return _xlSheetGetHorPageBreakSize(ptr);
+  }
+
+  int getVerPageBreak(int index){
+    return _xlSheetGetVerPageBreak(ptr, index);
+  }
+
+  int getVerPageBreakSize(){
+    return _xlSheetGetVerPageBreakSize(ptr);
+  }
+
+  void split(int row, int col){
+    _xlSheetSplit(ptr, row, col);
+  }
+
+  void groupRows(int rowFirst, int rowLast, int collapsed){
+    var res = _xlSheetGroupRows(ptr, rowFirst, rowLast, collapsed);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void groupCols(int colFirst, int colLast, int collapsed){
+    var res = _xlSheetGroupCols(ptr, colLast, colLast, collapsed);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  int groupSummaryBelow(){
+    return _xlSheetGroupSummaryBelow(ptr);
+  }
+
+  int groupSummaryRight(){
+    return _xlSheetGroupSummaryRight(ptr);
+  }
+
+  void clear(int rowFirst, int rowLast, int colFirst, int colLast){
+    _xlSheetClear(ptr, rowFirst, rowLast, colFirst, colLast);
+  }
+
+  void insertCol(int colFirst, int colLast){
+    var res = _xlSheetInsertCol(ptr, colFirst, colLast);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void insertRow(int rowFirst, int rowLast){
+    var res = _xlSheetInsertRow(ptr, rowFirst, rowLast);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void removeCol(int colFirst, int colLast){
+    var res = _xlSheetRemoveCol(ptr, colFirst, colLast);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void removeRow(int rowFirst, int rowLast){
+    var res = _xlSheetRemoveRow(ptr, rowFirst, rowLast);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void copyCel(int rowSrc, int colSrc, int rowDst, int colDst){
+    var res = _xlSheetCopyCell(ptr, rowSrc, colSrc, rowDst, colDst);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  int firstRow(){
+    return _xlSheetFirstRow(ptr);
+  }
+
+  int lastRow(){
+    return _xlSheetLastRow(ptr);
+  }
+
+  int firstCol(){
+    return _xlSheetFirstCol(ptr);
+  }
+
+  int lastCol(){
+    return _xlSheetLastCol(ptr);
+  }
+
+  int displayGridlines(){
+    return _xlSheetDisplayGridlines(ptr);
+  }
+
+  int printGridlines(){
+    return _xlSheetPrintGridlines(ptr);
+  }
+
+  int zoom(){
+    return _xlSheetZoom(ptr);
+  }
+
+  void setZoom(int zoom){
+    _xlSheetSetZoom(ptr, zoom);
+  }
+
+  int printZoom(){
+    return _xlSheetPrintZoom(ptr);
+  }
+
+  int printLandscape(){
+    return _xlSheetLandscape(ptr);
+  }
+
+  int paper(){
+    return _xlSheetPaper(ptr);
+  }
+
+  String header(){
+    return _xlSheetHeader(ptr);
+  }
+
+  num headerMargin(){
+    return _xlSheetHeaderMargin(ptr);
+  }
+
+  String footer(){
+    return _xlSheetFooter(ptr);
+  }
+
+  num footerMargin(){
+    return _xlSheetFooterMargin(ptr);
+  }
+
+  int hCenter(){
+    return _xlSheetHCenter(ptr);
+  }
+
+  int vCenter(){
+    return _xlSheetVCenter(ptr);
+  }
+
+  num marginLeft(){
+    return _xlSheetMarginLeft(ptr);
+  }
+
+  num marginRight(){
+    return _xlSheetMarginRight(ptr);
+  }
+
+  num marginTop(){
+    return _xlSheetMarginTop(ptr);
+  }
+
+  num marginBottom(){
+    return _xlSheetMarginBottom(ptr);
+  }
+
+  int printRowCol(){
+    return _xlSheetPrintRowCol(ptr);
+  }
+
+  void clearPrintRepeats(){
+    _xlSheetClearPrintRepeats(ptr);
+  }
+
+  void clearPrintArea(){
+    _xlSheetClearPrintArea(ptr);
+  }
+
+  void delNamedRange(String name, int scopeId){
+    var res = _xlSheetDelNamedRange(ptr, name, scopeId);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  int namedRangeSize(){
+    return _xlSheetNamedRangeSize(ptr);
+  }
+
+  int tableSize(){
+    return _xlSheetTableSize(ptr);
+  }
+
+  int hyperlinkSize(){
+    return _xlSheetHyperlinkSize(ptr);
+  }
+
+  int delHyperlink(int index) {
+    return _xlSheetDelHyperlink(ptr, index);
+  }
+
+  void addHyperlink(String hyperlink, int rowFirst, int rowLast, int colFirst, int colLast){
+    _xlSheetAddHyperlink(ptr, hyperlink, rowFirst, rowLast, colFirst, colLast);
+  }
+
+  void applyFilter() {
+    _xlSheetApplyFilter(ptr);
+  }
+
+  void removeFilter(){
+    _xlSheetRemoveFilter(ptr);
+  }
+
+  String name(){
+    return _xlSheetName(ptr);
+  }
+
+  int protect(){
+    return _xlSheetProtect(ptr);
+  }
+
+  int hidden(){
+    return _xlSheetHidden(ptr);
+  }
+
+  int rightToLeft() {
+    return _xlSheetRightToLeft(ptr);
+  }
+
+  String rowColToAddr(int row, int col, int rowRelative, int colRelative){
+    return _xlSheetRowColToAddr(ptr, row, col, rowRelative, colRelative);
+  }
+
+  void addIgnoredError(int rowFirst, int colFirst, int rowLast, int colLast, int iError){
+    var res = _xlSheetAddIgnoredError(ptr, rowFirst, colFirst, rowLast, colLast, iError);
+    if (res == 0) {
+      throw XlException(book.errorMessage());
+    }
+  }
+
+  void addDataValidation(int type, int op, int rowFirst, int rowLast, int colFirst, int colLast, String value1, String value2){
+    _xlSheetAddDataValidation(ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
+  }
+
+  void addDataValidationDouble(int type, int op, int rowFirst, int rowLast, int colFirst, int colLast, num value1, num value2){
+    _xlSheetAddDataValidationDouble(ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
+  }
+
+  void removeDataValidations(){
+    _xlSheetRemoveDataValidations(ptr);
   }
 
 }

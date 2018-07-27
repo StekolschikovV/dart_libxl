@@ -31,7 +31,7 @@ main() {
   sheet.writeStr(3,1,'World',format);
 
   var formatCopy = book.addFormat(initFormat: format);
-  formatCopy.setAlignV(AlignH.ALIGNV_TOP);
+  formatCopy.setAlignV(AlignH.ALIGNH_CENTER);
   sheet.writeNum(1,0,555.0, formatCopy);
 
 
