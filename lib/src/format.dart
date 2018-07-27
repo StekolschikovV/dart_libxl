@@ -46,8 +46,8 @@ class XlFormat {
     return _xlFormatAlignV(ptr);
   }
 
-  setAlignV(int align) {
-    _xlFormatSetAlignV(ptr, align);
+  setAlignV(AlignH align) {
+    _xlFormatSetAlignV(ptr, align.value);
   }
 
   wrap() {

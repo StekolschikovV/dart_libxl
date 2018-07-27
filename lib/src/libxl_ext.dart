@@ -8,7 +8,7 @@ part 'font.g.dart';
 part 'font.dart';
 part 'book.dart';
 part 'sheet.dart';
-
+part 'enum.dart';
 
 class XlException {
   String message;

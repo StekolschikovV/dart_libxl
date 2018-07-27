@@ -25,12 +25,12 @@ main() {
 
 
   var format = book.addFormat();
-  format.formatSetBorderBottom(3);
-  format.formatSetAlignH(3);
+  format.setBorderBottom(3);
+  format.setAlignH(3);
   sheet.writeStr(3,1,'World',format);
 
   var formatCopy = book.addFormat(initFormat: format);
-  formatCopy.formatAlignV(0);
+  formatCopy.setAlignV(AlignH.ALIGNV_TOP);
   sheet.writeNum(1,0,555.0, formatCopy);
 
 
