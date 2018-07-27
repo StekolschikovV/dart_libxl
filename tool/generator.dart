@@ -57,6 +57,9 @@ main(List<String> arguments) {
   var results = parser.parse(arguments);
 
   var stringWorker = new StringWorker();
+  //print(stringWorker.readFrom('lib/src/c/include_c/BookW.h'));
+  var strList = stringWorker.readFrom('lib/src/c/include_c/enum.h');
+  stringWorker.getEnums(strList);
 
   //stringWorker.say();
 
