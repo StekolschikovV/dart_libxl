@@ -61,7 +61,7 @@ main() {
 
   var sheet = book.addSheet('Invoice');
 
-  sheet.writeStr(2, 1, "Invoice No. 3568", titleFormat);
+  sheet.writeStr(3, 1, "Invoice No. 3568", titleFormat);
   sheet.writeStr(4, 1, "Name: John Smith");
   sheet.writeStr(5, 1, "Address: San Ramon, CA 94583 USA");
 
@@ -80,7 +80,7 @@ main() {
 
   sheet.writeStr(14, 2, "Signature", signatureFormat);
 
-  sheet.setCol(1, 1, 40.0, 0);
+  sheet.setCol(3, 1, 40.0, 0);
  //sheet.setRow(1, 1, 0);
   sheet.setCol(2, 2, 15.0, 0);
 
