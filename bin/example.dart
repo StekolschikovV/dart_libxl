@@ -1,28 +1,27 @@
 import 'package:libxl/libxl.dart';
+
 //import 'dart:io';
 main() {
   print('------------------------------------');
   print('Start example');
   //var xlFile = new File('test.xls');
   //if (xlFile.existsSync()) {
-    //xlFile.deleteSync();
+  //xlFile.deleteSync();
   //}
   var book = new XlBook();
 //  var font = new XlFont();
 
   //try {
-   // var notASheet = book.getSheet(0);
+  // var notASheet = book.getSheet(0);
   //} catch (error) {
 //    print('$error. You should create the sheet first');
   //}
 
-
-
   var boldFont = book.addFont();
-  boldFont.setBold(bold:true);
+  boldFont.setBold(bold: true);
 
   var titleFont = book.addFont();
-  titleFont.setName(name:"Arial Black");
+  titleFont.setName(name: "Arial Black");
   titleFont.setSize(16);
 
   var titleFormat = book.addFormat();
@@ -61,33 +60,29 @@ main() {
 
   var sheet = book.addSheet('Invoice');
 
-  sheet.writeStr(3, 1, "Invoice No. 3568", format:titleFormat);
+  sheet.writeStr(3, 1, "Invoice No. 3568", format: titleFormat);
   sheet.writeStr(4, 1, "Name: John Smith");
   sheet.writeStr(5, 1, "Address: San Ramon, CA 94583 USA");
 
-  sheet.writeStr(7, 1, "Description", format:headerFormat);
-  sheet.writeStr(7, 2, "Amount", format:headerFormat);
+  sheet.writeStr(7, 1, "Description", format: headerFormat);
+  sheet.writeStr(7, 2, "Amount", format: headerFormat);
 
-  sheet.writeStr(8, 1, "Ball-Point Pens", format:descriptionFormat);
-  sheet.writeNum(8, 2, 85.0, format:amountFormat);
-  sheet.writeStr(9, 1, "T-Shirts", format:descriptionFormat);
-  sheet.writeNum(9, 2, 150.0, format:amountFormat);
-  sheet.writeStr(10, 1, "Tea cups", format:descriptionFormat);
-  sheet.writeNum(10, 2, 45.0, format:amountFormat);
+  sheet.writeStr(8, 1, "Ball-Point Pens", format: descriptionFormat);
+  sheet.writeNum(8, 2, 85.0, format: amountFormat);
+  sheet.writeStr(9, 1, "T-Shirts", format: descriptionFormat);
+  sheet.writeNum(9, 2, 150.0, format: amountFormat);
+  sheet.writeStr(10, 1, "Tea cups", format: descriptionFormat);
+  sheet.writeNum(10, 2, 45.0, format: amountFormat);
 
-  sheet.writeStr(11, 1, "Total:", format:totalLabelFormat);
-  sheet.writeNum(11, 2, 280.0, format:totalFormat);
+  sheet.writeStr(11, 1, "Total:", format: totalLabelFormat);
+  sheet.writeNum(11, 2, 280.0, format: totalFormat);
 
-  sheet.writeStr(14, 2, "Signature", format:signatureFormat);
+  sheet.writeStr(14, 2, "Signature", format: signatureFormat);
 
-  sheet.setCol(3, 1, 40.0, hidden:false);
-  sheet.setRow(3, 100, hidden:false);
-  sheet.setCol(2, 2, 15.0, hidden:false);
+  sheet.setCol(1, 1, 40);
+  sheet.setRow(3, 100);
+  sheet.setCol(2, 2, 15);
 
-
-
-
-  
 //  var f = book.addFormat();
 //  etBorder(100);
 
@@ -99,7 +94,7 @@ main() {
   //var format = book.addFormat();
   //format.setBorderBottom(3);
   //format.setAlignH(3);
- // format.setRotation(1);
+  // format.setRotation(1);
   //sheet.writeStr(3, 1, 'World', format);
 
   //var formatCopy = book.addFormat(initFormat: format);

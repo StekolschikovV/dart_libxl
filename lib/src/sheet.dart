@@ -88,10 +88,10 @@ class XlSheet {
     _xlSheetWriteError(ptr, row, col, error, format.ptr);
   }
 
-  setCol(int colFirst, int colLast, double width,
+  setCol(int colFirst, int colLast, num width,
       {XlFormat format = const XlFormat.empty(), bool hidden = false}) {
     var res = _xlSheetSetCol(
-        ptr, colFirst, colLast, width, format.ptr, hidden ? 0 : 1);
+        ptr, colFirst, colLast, width.toDouble(), format.ptr, hidden ? 1 : 0);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
@@ -99,7 +99,7 @@ class XlSheet {
 
   setRow(int row, num height,
       {XlFormat format = const XlFormat.empty(), bool hidden = false}) {
-    var res = _xlSheetSetRow(ptr, row, height, format.ptr, hidden ? 0 : 1);
+    var res = _xlSheetSetRow(ptr, row, height.toDouble(), format.ptr, hidden ? 1 : 0);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
