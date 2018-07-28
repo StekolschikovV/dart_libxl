@@ -4,8 +4,12 @@ part of 'libxl_ext.dart';
 class XlFont {
 
   final int ptr;
+  final XlBook book;
+  XlFont(this.ptr, this.book);
 
-  XlFont() : ptr = 0;
+  const XlFont.empty()
+      : ptr = 0,
+        book = const XlBook.empty();
 
   @override
   String toString() {

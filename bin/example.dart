@@ -39,8 +39,8 @@ main() {
 //  linkFont->setUnderline(UNDERLINE_SINGLE);
 //  =================================
   var linkFont = book.addFont(0);
-  linkFont.setColor(Color.BLUE);
-
+  linkFont.setColor(Color.RED);
+  linkFont.setSize(32);
   sheet.writeNum(1,0,555.0, formatCopy);
 
 
