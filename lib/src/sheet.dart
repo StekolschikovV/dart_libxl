@@ -15,100 +15,105 @@ class XlSheet {
     return 'XlSheet{ptr: $ptr}';
   }
 
-  writeStr(int row, int col, String value, [XlFormat format = const XlFormat.empty()]) {
+  writeStr(int row, int col, String value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteStr(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeNum(int row, int col, double value, [XlFormat format = const XlFormat.empty()]) {
+  writeNum(int row, int col, double value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteNum(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeBool(int row, int col, int value, [XlFormat format = const XlFormat.empty()]) {
+  writeBool(int row, int col, int value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteBool(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeBlank(int row, int col, [XlFormat format = const XlFormat.empty()]) {
+  writeBlank(int row, int col, {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteBlank(ptr, row, col, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormula(int row, int col, String value, [XlFormat format = const XlFormat.empty()]) {
+  writeFormula(int row, int col, String value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteFormula(ptr, row, col, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaNum(int row, int col, String expr, num value, [XlFormat format = const XlFormat.empty()]) {
+  writeFormulaNum(int row, int col, String expr, num value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteFormulaNum(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaStr(int row, int col, String expr, String value, [XlFormat format = const XlFormat.empty()]) {
+  writeFormulaStr(int row, int col, String expr, String value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteFormulaStr(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeFormulaBool(int row, int col, String expr, int value, [XlFormat format = const XlFormat.empty()]) {
+  writeFormulaBool(int row, int col, String expr, int value,
+      {XlFormat format = const XlFormat.empty()}) {
     var res = _xlSheetWriteFormulaBool(ptr, row, col, expr, value, format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  writeComment(int row, int col, String value, String author, int width, int height) {
+  writeComment(
+      int row, int col, String value, String author, int width, int height) {
     _xlSheetWriteComment(ptr, row, col, value, author, width, height);
   }
 
-  writeError(int row, int col, int error, [XlFormat format = const XlFormat.empty()]) {
+  writeError(int row, int col, int error,
+      {XlFormat format = const XlFormat.empty()}) {
     _xlSheetWriteError(ptr, row, col, error, format.ptr);
   }
 
-  setCol(int colFirst, int colLast, double width, int hidden, [XlFormat format = const XlFormat.empty()]) {
-    //int xlSheetSetCol(SheetHandle handle, int colFirst, int colLast, double width, FormatHandle format, int hidden)
-    //print('------------');
-    //print(hidden);
-    //print('------------');
-    //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, hidden);
-    var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, hidden);
-    //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, 0);
-    //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, 1);
+  setCol(int colFirst, int colLast, double width,
+      {XlFormat format = const XlFormat.empty(), bool hidden = false}) {
+    var res = _xlSheetSetCol(
+        ptr, colFirst, colLast, width, format.ptr, hidden ? 0 : 1);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  setRow(int row, num height, int hidden, [XlFormat format = const XlFormat.empty()]) {
-    var res = _xlSheetSetRow(ptr, row,  height, format.ptr,  hidden);
+  setRow(int row, num height,
+      {XlFormat format = const XlFormat.empty(), bool hidden = false}) {
+    var res = _xlSheetSetRow(ptr, row, height, format.ptr, hidden ? 0 : 1);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  setRowHidden(int row, int hidden) {
-    var res = _xlSheetSetRowHidden(ptr, row, hidden);
+  setRowHidden(int row, {bool hidden = true}) {
+    var res = _xlSheetSetRowHidden(ptr, row, hidden ? 1 : 0);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  setColHidden(int col, int hidden) {
-    var res = _xlSheetSetColHidden(ptr, col, hidden);
+  setColHidden(int col, {bool hidden = true}) {
+    var res = _xlSheetSetColHidden(ptr, col, hidden ? 1 : 0);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
@@ -121,12 +126,16 @@ class XlSheet {
     }
   }
 
-  setPicture(int row, int col, int pictureId, num scale, int offset_x, int offset_y, int pos) {
-    _xlSheetSetPicture(ptr, row, col, pictureId, scale, offset_x, offset_y, pos);
+  setPicture(int row, int col, int pictureId, num scale, int offset_x,
+      int offset_y, int pos) {
+    _xlSheetSetPicture(
+        ptr, row, col, pictureId, scale, offset_x, offset_y, pos);
   }
 
-  setPicture2(int row, int col, int pictureId, int width, int height, int offset_x, int offset_y, int pos) {
-    _xlSheetSetPicture2(ptr, row, col, pictureId, width, height, offset_x, offset_y, pos);
+  setPicture2(int row, int col, int pictureId, int width, int height,
+      int offset_x, int offset_y, int pos) {
+    _xlSheetSetPicture2(
+        ptr, row, col, pictureId, width, height, offset_x, offset_y, pos);
   }
 
   setHorPageBreak(int row, int pageBreak) {
@@ -160,7 +169,7 @@ class XlSheet {
   }
 
   setPrintZoom(int zoom) {
-  _xlSheetSetPrintZoom(ptr, zoom);
+    _xlSheetSetPrintZoom(ptr, zoom);
   }
 
   setPrintFit(int wPages, int hPages) {
@@ -168,7 +177,7 @@ class XlSheet {
   }
 
   setLandscape(int landscape) {
-  _xlSheetSetLandscape(ptr, landscape);
+    _xlSheetSetLandscape(ptr, landscape);
   }
 
   setPaper(int paper) {
@@ -229,8 +238,10 @@ class XlSheet {
     _xlSheetSetPrintArea(ptr, rowFirst, rowLast, colFirst, colLast);
   }
 
-  setNamedRange(String name, int rowFirst, int rowLast, int colFirst, int colLast, int scopeId) {
-    var res = _xlSheetSetNamedRange(ptr, name, rowFirst, rowLast, colFirst, colLast, scopeId);
+  setNamedRange(String name, int rowFirst, int rowLast, int colFirst,
+      int colLast, int scopeId) {
+    var res = _xlSheetSetNamedRange(
+        ptr, name, rowFirst, rowLast, colFirst, colLast, scopeId);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
@@ -248,8 +259,8 @@ class XlSheet {
     _xlSheetSetProtectEx(ptr, protect, password, enhancedProtection);
   }
 
-  setHidden(int hidden) {
-    var res = _xlSheetSetHidden(ptr, hidden);
+  setHidden({bool hidden = true}) {
+    var res = _xlSheetSetHidden(ptr, hidden ? 1 : 0);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
@@ -275,266 +286,266 @@ class XlSheet {
     _xlSheetSetTabRgbColor(ptr, red, green, blue);
   }
 
-  int cellType(int row, int col){
+  int cellType(int row, int col) {
     return _xlSheetCellType(ptr, row, col);
   }
 
-  int isFormula(int row, int col){
+  int isFormula(int row, int col) {
     return _xlSheetIsFormula(ptr, row, col);
   }
 
-  int cellFormat(int row, int col){
+  int cellFormat(int row, int col) {
     return _xlSheetCellFormat(ptr, row, col);
   }
 
-  void setCellFormat(int row, int col, int format){
+  void setCellFormat(int row, int col, int format) {
     _xlSheetSetCellFormat(ptr, row, col, format);
   }
 
-  String readComment(int row, int col){
+  String readComment(int row, int col) {
     return _xlSheetReadComment(ptr, row, col);
   }
 
-  void removeComment(int row, int col){
+  void removeComment(int row, int col) {
     _xlSheetRemoveComment(ptr, row, col);
   }
 
-  int isDate(int row, int col){
+  int isDate(int row, int col) {
     return _xlSheetIsDate(ptr, row, col);
   }
 
-  int readError(int row, int col){
+  int readError(int row, int col) {
     return _xlSheetReadError(ptr, row, col);
   }
 
-  num colWidth(int col){
+  num colWidth(int col) {
     return _xlSheetColWidth(ptr, col);
   }
 
-  num rowWidth(int row){
+  num rowWidth(int row) {
     return _xlSheetRowHeight(ptr, row);
   }
 
-  int rowHidden(int row){
+  int rowHidden(int row) {
     return _xlSheetRowHidden(ptr, row);
   }
 
-  int colHidden(int col){
+  int colHidden(int col) {
     return _xlSheetColHidden(ptr, col);
   }
 
-  void delMerge(int row, int col){
+  void delMerge(int row, int col) {
     var res = _xlSheetDelMerge(ptr, row, col);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  int mergeSize(){
+  int mergeSize() {
     return _xlSheetMergeSize(ptr);
   }
 
-  int delMergeByIndex(int index){
+  int delMergeByIndex(int index) {
     return _xlSheetDelMergeByIndex(ptr, index);
   }
 
-  int pictureSize(){
+  int pictureSize() {
     return _xlSheetPictureSize(ptr);
   }
 
-  int getHorPageBreak(int index){
+  int getHorPageBreak(int index) {
     return _xlSheetGetHorPageBreak(ptr, index);
   }
 
-  int getHorPageBreakSize(){
+  int getHorPageBreakSize() {
     return _xlSheetGetHorPageBreakSize(ptr);
   }
 
-  int getVerPageBreak(int index){
+  int getVerPageBreak(int index) {
     return _xlSheetGetVerPageBreak(ptr, index);
   }
 
-  int getVerPageBreakSize(){
+  int getVerPageBreakSize() {
     return _xlSheetGetVerPageBreakSize(ptr);
   }
 
-  void split(int row, int col){
+  void split(int row, int col) {
     _xlSheetSplit(ptr, row, col);
   }
 
-  void groupRows(int rowFirst, int rowLast, int collapsed){
+  void groupRows(int rowFirst, int rowLast, int collapsed) {
     var res = _xlSheetGroupRows(ptr, rowFirst, rowLast, collapsed);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void groupCols(int colFirst, int colLast, int collapsed){
+  void groupCols(int colFirst, int colLast, int collapsed) {
     var res = _xlSheetGroupCols(ptr, colLast, colLast, collapsed);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  int groupSummaryBelow(){
+  int groupSummaryBelow() {
     return _xlSheetGroupSummaryBelow(ptr);
   }
 
-  int groupSummaryRight(){
+  int groupSummaryRight() {
     return _xlSheetGroupSummaryRight(ptr);
   }
 
-  void clear(int rowFirst, int rowLast, int colFirst, int colLast){
+  void clear(int rowFirst, int rowLast, int colFirst, int colLast) {
     _xlSheetClear(ptr, rowFirst, rowLast, colFirst, colLast);
   }
 
-  void insertCol(int colFirst, int colLast){
+  void insertCol(int colFirst, int colLast) {
     var res = _xlSheetInsertCol(ptr, colFirst, colLast);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void insertRow(int rowFirst, int rowLast){
+  void insertRow(int rowFirst, int rowLast) {
     var res = _xlSheetInsertRow(ptr, rowFirst, rowLast);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void removeCol(int colFirst, int colLast){
+  void removeCol(int colFirst, int colLast) {
     var res = _xlSheetRemoveCol(ptr, colFirst, colLast);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void removeRow(int rowFirst, int rowLast){
+  void removeRow(int rowFirst, int rowLast) {
     var res = _xlSheetRemoveRow(ptr, rowFirst, rowLast);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void copyCel(int rowSrc, int colSrc, int rowDst, int colDst){
+  void copyCel(int rowSrc, int colSrc, int rowDst, int colDst) {
     var res = _xlSheetCopyCell(ptr, rowSrc, colSrc, rowDst, colDst);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  int firstRow(){
+  int firstRow() {
     return _xlSheetFirstRow(ptr);
   }
 
-  int lastRow(){
+  int lastRow() {
     return _xlSheetLastRow(ptr);
   }
 
-  int firstCol(){
+  int firstCol() {
     return _xlSheetFirstCol(ptr);
   }
 
-  int lastCol(){
+  int lastCol() {
     return _xlSheetLastCol(ptr);
   }
 
-  int displayGridlines(){
+  int displayGridlines() {
     return _xlSheetDisplayGridlines(ptr);
   }
 
-  int printGridlines(){
+  int printGridlines() {
     return _xlSheetPrintGridlines(ptr);
   }
 
-  int zoom(){
+  int zoom() {
     return _xlSheetZoom(ptr);
   }
 
-  void setZoom(int zoom){
+  void setZoom(int zoom) {
     _xlSheetSetZoom(ptr, zoom);
   }
 
-  int printZoom(){
+  int printZoom() {
     return _xlSheetPrintZoom(ptr);
   }
 
-  int printLandscape(){
+  int printLandscape() {
     return _xlSheetLandscape(ptr);
   }
 
-  int paper(){
+  int paper() {
     return _xlSheetPaper(ptr);
   }
 
-  String header(){
+  String header() {
     return _xlSheetHeader(ptr);
   }
 
-  num headerMargin(){
+  num headerMargin() {
     return _xlSheetHeaderMargin(ptr);
   }
 
-  String footer(){
+  String footer() {
     return _xlSheetFooter(ptr);
   }
 
-  num footerMargin(){
+  num footerMargin() {
     return _xlSheetFooterMargin(ptr);
   }
 
-  int hCenter(){
+  int hCenter() {
     return _xlSheetHCenter(ptr);
   }
 
-  int vCenter(){
+  int vCenter() {
     return _xlSheetVCenter(ptr);
   }
 
-  num marginLeft(){
+  num marginLeft() {
     return _xlSheetMarginLeft(ptr);
   }
 
-  num marginRight(){
+  num marginRight() {
     return _xlSheetMarginRight(ptr);
   }
 
-  num marginTop(){
+  num marginTop() {
     return _xlSheetMarginTop(ptr);
   }
 
-  num marginBottom(){
+  num marginBottom() {
     return _xlSheetMarginBottom(ptr);
   }
 
-  int printRowCol(){
+  int printRowCol() {
     return _xlSheetPrintRowCol(ptr);
   }
 
-  void clearPrintRepeats(){
+  void clearPrintRepeats() {
     _xlSheetClearPrintRepeats(ptr);
   }
 
-  void clearPrintArea(){
+  void clearPrintArea() {
     _xlSheetClearPrintArea(ptr);
   }
 
-  void delNamedRange(String name, int scopeId){
+  void delNamedRange(String name, int scopeId) {
     var res = _xlSheetDelNamedRange(ptr, name, scopeId);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  int namedRangeSize(){
+  int namedRangeSize() {
     return _xlSheetNamedRangeSize(ptr);
   }
 
-  int tableSize(){
+  int tableSize() {
     return _xlSheetTableSize(ptr);
   }
 
-  int hyperlinkSize(){
+  int hyperlinkSize() {
     return _xlSheetHyperlinkSize(ptr);
   }
 
@@ -542,7 +553,8 @@ class XlSheet {
     return _xlSheetDelHyperlink(ptr, index);
   }
 
-  void addHyperlink(String hyperlink, int rowFirst, int rowLast, int colFirst, int colLast){
+  void addHyperlink(
+      String hyperlink, int rowFirst, int rowLast, int colFirst, int colLast) {
     _xlSheetAddHyperlink(ptr, hyperlink, rowFirst, rowLast, colFirst, colLast);
   }
 
@@ -550,19 +562,19 @@ class XlSheet {
     _xlSheetApplyFilter(ptr);
   }
 
-  void removeFilter(){
+  void removeFilter() {
     _xlSheetRemoveFilter(ptr);
   }
 
-  String name(){
+  String name() {
     return _xlSheetName(ptr);
   }
 
-  int protect(){
+  int protect() {
     return _xlSheetProtect(ptr);
   }
 
-  int hidden(){
+  int hidden() {
     return _xlSheetHidden(ptr);
   }
 
@@ -570,27 +582,32 @@ class XlSheet {
     return _xlSheetRightToLeft(ptr);
   }
 
-  String rowColToAddr(int row, int col, int rowRelative, int colRelative){
+  String rowColToAddr(int row, int col, int rowRelative, int colRelative) {
     return _xlSheetRowColToAddr(ptr, row, col, rowRelative, colRelative);
   }
 
-  void addIgnoredError(int rowFirst, int colFirst, int rowLast, int colLast, int iError){
-    var res = _xlSheetAddIgnoredError(ptr, rowFirst, colFirst, rowLast, colLast, iError);
+  void addIgnoredError(
+      int rowFirst, int colFirst, int rowLast, int colLast, int iError) {
+    var res = _xlSheetAddIgnoredError(
+        ptr, rowFirst, colFirst, rowLast, colLast, iError);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
   }
 
-  void addDataValidation(int type, int op, int rowFirst, int rowLast, int colFirst, int colLast, String value1, String value2){
-    _xlSheetAddDataValidation(ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
+  void addDataValidation(int type, int op, int rowFirst, int rowLast,
+      int colFirst, int colLast, String value1, String value2) {
+    _xlSheetAddDataValidation(
+        ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
   }
 
-  void addDataValidationDouble(int type, int op, int rowFirst, int rowLast, int colFirst, int colLast, num value1, num value2){
-    _xlSheetAddDataValidationDouble(ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
+  void addDataValidationDouble(int type, int op, int rowFirst, int rowLast,
+      int colFirst, int colLast, num value1, num value2) {
+    _xlSheetAddDataValidationDouble(
+        ptr, type, op, rowFirst, rowLast, colFirst, colLast, value1, value2);
   }
 
-  void removeDataValidations(){
+  void removeDataValidations() {
     _xlSheetRemoveDataValidations(ptr);
   }
-
 }

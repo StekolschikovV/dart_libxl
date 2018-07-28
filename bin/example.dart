@@ -1,5 +1,5 @@
 import 'package:libxl/libxl.dart';
-import 'dart:io';
+//import 'dart:io';
 main() {
   print('------------------------------------');
   print('Start example');
@@ -19,10 +19,10 @@ main() {
 
 
   var boldFont = book.addFont();
-  boldFont.setBold(1);
+  boldFont.setBold(bold:true);
 
   var titleFont = book.addFont();
-  titleFont.setName("Arial Black");
+  titleFont.setName(name:"Arial Black");
   titleFont.setSize(16);
 
   var titleFormat = book.addFormat();
@@ -61,28 +61,28 @@ main() {
 
   var sheet = book.addSheet('Invoice');
 
-  sheet.writeStr(3, 1, "Invoice No. 3568", titleFormat);
+  sheet.writeStr(3, 1, "Invoice No. 3568", format:titleFormat);
   sheet.writeStr(4, 1, "Name: John Smith");
   sheet.writeStr(5, 1, "Address: San Ramon, CA 94583 USA");
 
-  sheet.writeStr(7, 1, "Description", headerFormat);
-  sheet.writeStr(7, 2, "Amount", headerFormat);
+  sheet.writeStr(7, 1, "Description", format:headerFormat);
+  sheet.writeStr(7, 2, "Amount", format:headerFormat);
 
-  sheet.writeStr(8, 1, "Ball-Point Pens", descriptionFormat);
-  sheet.writeNum(8, 2, 85.0, amountFormat);
-  sheet.writeStr(9, 1, "T-Shirts", descriptionFormat);
-  sheet.writeNum(9, 2, 150.0, amountFormat);
-  sheet.writeStr(10, 1, "Tea cups", descriptionFormat);
-  sheet.writeNum(10, 2, 45.0, amountFormat);
+  sheet.writeStr(8, 1, "Ball-Point Pens", format:descriptionFormat);
+  sheet.writeNum(8, 2, 85.0, format:amountFormat);
+  sheet.writeStr(9, 1, "T-Shirts", format:descriptionFormat);
+  sheet.writeNum(9, 2, 150.0, format:amountFormat);
+  sheet.writeStr(10, 1, "Tea cups", format:descriptionFormat);
+  sheet.writeNum(10, 2, 45.0, format:amountFormat);
 
-  sheet.writeStr(11, 1, "Total:", totalLabelFormat);
-  sheet.writeNum(11, 2, 280.0, totalFormat);
+  sheet.writeStr(11, 1, "Total:", format:totalLabelFormat);
+  sheet.writeNum(11, 2, 280.0, format:totalFormat);
 
-  sheet.writeStr(14, 2, "Signature", signatureFormat);
+  sheet.writeStr(14, 2, "Signature", format:signatureFormat);
 
-  sheet.setCol(3, 1, 40.0, 0);
- //sheet.setRow(1, 1, 0);
-  sheet.setCol(2, 2, 15.0, 0);
+  sheet.setCol(3, 1, 40.0, hidden:false);
+  sheet.setRow(3, 100, hidden:false);
+  sheet.setCol(2, 2, 15.0, hidden:false);
 
 
 

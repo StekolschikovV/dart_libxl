@@ -1,10 +1,9 @@
 part of 'libxl_ext.dart';
 
-
 class XlFont {
-
   final int ptr;
   final XlBook book;
+
   XlFont(this.ptr, this.book);
 
   const XlFont.empty()
@@ -16,68 +15,83 @@ class XlFont {
     return 'XlFont{ptr: $ptr}';
   }
 
-  fontSize() {
+  /// Returns the size of the font in points.
+  size() {
     return _xlFontSize(ptr);
   }
 
+  /// Sets the size of the font in points.
   setSize(int size) {
     _xlFontSetSize(ptr, size);
   }
 
-  italic(int size) {
+  /// Returns whether the font is italic.
+  italic() {
     return _xlFontItalic(ptr);
   }
 
-  setItalic(int italic) {
-    _xlFontSetItalic(ptr, italic);
+  /// Turns on/off the italic font.
+  setItalic({bool italic = true}) {
+    _xlFontSetItalic(ptr, italic ? 1 : 0);
   }
 
-  strikeOut(int size) {
+  /// Returns whether the font is strikeout: 1 - strikeout, 0 - not strikeout.
+  strikeOut() {
     return _xlFontStrikeOut(ptr);
   }
 
-  setStrikeOut(int strikeOut) {
-    _xlFontSetStrikeOut(ptr, strikeOut);
+  /// Turns on/off the strikeout font: 1 - strikeout, 0 - not strikeout.
+  setStrikeOut({bool strikeOut = true}) {
+    _xlFontSetStrikeOut(ptr, strikeOut ? 1 : 0);
   }
 
-  color(int size) {
+  /// Returns the color of the font.
+  color() {
     return _xlFontColor(ptr);
   }
 
+  /// Sets the color of the font.
   setColor(Color color) {
     _xlFontSetColor(ptr, color.value);
   }
 
-  bold(int size) {
+  /// Returns whether the font is bold: 1 - bold, 0 - not bold.
+  bold() {
     return _xlFontBold(ptr);
   }
 
-  setBold(int bold) {
-    _xlFontSetBold(ptr, bold);
+  /// Turns on/off the bold font: 1 - bold, 0 - not bold.
+  setBold({bool bold = true}) {
+    _xlFontSetBold(ptr, bold ? 1 : 0);
   }
 
-  script(int size) {
+  /// Returns the script style of the font.
+  script() {
     return _xlFontScript(ptr);
   }
 
+  /// Sets the script style of the font.
   setScript(int script) {
     _xlFontSetScript(ptr, script);
   }
 
+  /// Returns the underline style of the font.
   underline() {
     return _xlFontUnderline(ptr);
   }
 
+  /// Sets the underline style of the font.
   setUnderline(int underline) {
     _xlFontSetUnderline(ptr, underline);
   }
 
+  /// Returns the name of the font.
   name() {
     return _xlFontName(ptr);
   }
 
-  setName(String name) {
+  /// Sets the name of the font. Default name is "Arial".
+  setName({String name = 'Arial'}) {
     _xlFontSetName(ptr, name);
   }
-
 }

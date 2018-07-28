@@ -15,10 +15,16 @@ class XlFormat {
     return 'XlFormat{ptr: $ptr}';
   }
 
+  /// Returns the handle of the current font.
   font() {
-    return _xlFormatFont(ptr);
+    var res = _xlFormatFont(ptr);
+    if (res == null) {
+      throw XlException(book.errorMessage());
+    }
+    return res;
   }
 
+  /// Sets the font for the format.
   void setFont(XlFont font) {
     var res = _xlFormatSetFont(ptr, font.ptr);
     if (res == 0) {

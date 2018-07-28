@@ -39,7 +39,7 @@ class XlBook {
 
   /// Adds a new sheet to this book, returns the sheet handle. Set initSheet to 0 if you wish to add a new empty sheet or use existing sheet's handle for copying. Note initSheet must be only from this book.
   XlSheet addSheet(String sheetName,
-      [XlSheet initSheet = const XlSheet.empty()]) {
+  {XlSheet initSheet = const XlSheet.empty()}) {
     int sheetPointer = _xlBookAddSheet(ptr, sheetName, initSheet.ptr);
     if (sheetPointer == 0) {
       throw XlException(errorMessage());
@@ -111,7 +111,7 @@ class XlBook {
   }
 
   /// Inserts a new sheet to this book at position index, returns the sheet handle. Set initSheet to 0 if you wish to add a new empty sheet or use existing sheet's handle for copying. Note initSheet must be only from this book.
-  void insertSheet(int handle, int index, String name, int initSheet) {
+  void insertSheet(int index, String name, int initSheet) {
     var res = _xlBookInsertSheet(ptr, index, name, initSheet);
     if (res == 0) {
       throw XlException(errorMessage());
@@ -119,12 +119,12 @@ class XlBook {
   }
 
   /// Returns type of sheet with specified index.
-  int type(int handle, int index) {
+  int type(int index) {
     return _xlBookSheetType(ptr, index);
   }
 
   /// Takes a sheet with srcIndex and insert it in front of a sheet with dstIndex.
-  void moveSheet(int handle, int srcIndex, int dstIndex) {
+  void moveSheet(int srcIndex, int dstIndex) {
     var res = _xlBookMoveSheet(ptr, srcIndex, dstIndex);
     if (res == 0) {
       throw XlException(errorMessage());
@@ -145,7 +145,7 @@ class XlBook {
   }
 
   /// Adds a new font to the workbook, initial parameters can be copied from other font.
-  XlFont addFont([XlFont initFont = const XlFont.empty()]) {
+  XlFont addFont({XlFont initFont = const XlFont.empty()}) {
     var res = _xlBookAddFont(ptr, initFont.ptr  );
     if (res == 0) {
       throw XlException(errorMessage());
@@ -154,7 +154,7 @@ class XlBook {
   }
 
   /// Adds a new custom number format to the workbook. The format string customNumFormat indicates how to format and render the numeric value of a cell. See custom format strings guidelines. Returns the custom format identifier.
-  int addCustomNumFormat(int handle, String customNumFormat) {
+  int addCustomNumFormat(String customNumFormat) {
     var res = _xlBookAddCustomNumFormat(ptr, customNumFormat);
     if (res == 0) {
       throw XlException(errorMessage());
@@ -241,7 +241,7 @@ class XlBook {
   }
 
   /// Returns whether the R1C1 reference mode is active.
-  int refR1C1(int handle) {
+  int refR1C1() {
     return _xlBookRefR1C1(ptr);
   }
 
@@ -266,7 +266,7 @@ class XlBook {
   }
 
   /// ???
-  int version(int handle) {
+  int version() {
     return _xlBookVersion(ptr);
   }
 
@@ -281,7 +281,7 @@ class XlBook {
   }
 
   /// Sets the date system mode: 1 - 1904 date system, 0 - 1900 date system (default). In the 1900 date base system, the lower limit is January 1, 1900, which has serial value 1. In the 1904 date base system, the lower limit is January 1, 1904, which has serial value 0.
-  void setDate1904(int handle, int date1904) {
+  void setDate1904(int date1904) {
     _xlBookSetDate1904(ptr, date1904);
   }
 
@@ -291,7 +291,7 @@ class XlBook {
   }
 
   /// Sets the template flag: 1 - workbook is template, 0 - workbook is not template (default). It allows to change type of file from a template file (xlt and xltx) to a regular file (xls and xlsx) and vice versa.
-  void setTemplate(int handle, int tmpl) {
+  void setTemplate(int tmpl) {
     _xlBookSetTemplate(ptr, tmpl);
   }
 
