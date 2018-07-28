@@ -145,12 +145,12 @@ class XlBook {
   }
 
   /// Adds a new font to the workbook, initial parameters can be copied from other font.
-  XlFont addFont(int initFont) {
-    var res = _xlBookAddFont(ptr, initFont);
+  XlFont addFont([XlFont initFont = const XlFont.empty()]) {
+    var res = _xlBookAddFont(ptr, initFont.ptr  );
     if (res == 0) {
       throw XlException(errorMessage());
     }
-    return new XlFont(ptr, this);
+    return new XlFont(res, this);
   }
 
   /// Adds a new custom number format to the workbook. The format string customNumFormat indicates how to format and render the numeric value of a cell. See custom format strings guidelines. Returns the custom format identifier.

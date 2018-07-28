@@ -14,8 +14,7 @@ void _xlFontSetSize(Dart_NativeArguments args) {
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 0), &handle);
   int64_t size;
   Dart_IntegerToInt64(Dart_GetNativeArgument(args, 1), &size);
-  int size2 = 24;
-  xlFontSetSize((FontHandle) handle, size2);
+  xlFontSetSize((FontHandle) handle, size);
   Dart_SetReturnValue(args, Dart_Null());
   Dart_ExitScope();
 }

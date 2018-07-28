@@ -1,17 +1,20 @@
 import 'package:libxl/libxl.dart';
-
+import 'dart:io';
 main() {
   print('------------------------------------');
   print('Start example');
+  var xlFile = new File('test.xls');
+  if (xlFile.existsSync()) {
+    xlFile.deleteSync();
+  }
   var book = new XlBook();
 //  var font = new XlFont();
 
   try {
     var notASheet = book.getSheet(0);
-  } catch(error) {
+  } catch (error) {
 //    print('$error. You should create the sheet first');
   }
-
 
   var sheet = book.addSheet('TestSheet');
 
@@ -19,16 +22,15 @@ main() {
 //  etBorder(100);
 
   print('Sheet added');
-  sheet.writeStr(3,1,'World');
+  sheet.writeStr(3, 1, 'World');
 
-  sheet.writeNum(1,0,555.0);
-
+  sheet.writeNum(1, 0, 555.0);
 
   var format = book.addFormat();
   format.setBorderBottom(3);
   format.setAlignH(3);
   format.setRotation(1);
-  sheet.writeStr(3,1,'World',format);
+  sheet.writeStr(3, 1, 'World', format);
 
   var formatCopy = book.addFormat(initFormat: format);
   formatCopy.setAlignV(AlignV.CENTER);
@@ -38,14 +40,13 @@ main() {
 //  linkFont->setColor(COLOR_BLUE);
 //  linkFont->setUnderline(UNDERLINE_SINGLE);
 //  =================================
-  var linkFont = book.addFont(0);
-  linkFont.setColor(Color.RED);
-  linkFont.setSize(32);
-  sheet.writeNum(1,0,555.0, formatCopy);
-
-
-
-
+  var font = book.addFont();
+  font.setColor(Color.RED);
+  var fontFormat = book.addFormat();
+  font.setSize(18);
+  fontFormat.setFont(font);
+  sheet.writeNum(5, 0, 555.0, fontFormat);
+  sheet.setRow(5, 40, 0);
   book.addSheet('CopySheet', sheet);
 
   var fileName = 'test.xls';

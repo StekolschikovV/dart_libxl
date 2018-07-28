@@ -19,8 +19,8 @@ class XlFormat {
     return _xlFormatFont(ptr);
   }
 
-  void setFont(int fontHandle) {
-    var res = _xlFormatSetFont(ptr, fontHandle);
+  void setFont(XlFont font) {
+    var res = _xlFormatSetFont(ptr, font.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
