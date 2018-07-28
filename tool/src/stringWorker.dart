@@ -50,8 +50,16 @@ class StringWorker{
          // }
 
         }
-
-        output.writeln("  static const ${titleRes} = const ${headers[i]}._(${val != null ? val : ii});");
+        var enumName = headers[i];
+        var elemName = titleRes;
+        if (enumName != 'Paper') {
+          int skipPrefixes = 1;
+          if (enumName.toString().startsWith('DataValidation')) {
+            skipPrefixes = 2;
+          }
+          elemName = titleRes.toString().split('_').sublist(skipPrefixes).join('_');
+        }
+        output.writeln("  static const ${elemName} = const ${headers[i]}._(${val != null ? val : ii});");
         ii++;
       }
       output.writeln("}\n");
