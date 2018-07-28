@@ -24,7 +24,7 @@ class XlFont {
     _xlFontSetSize(ptr, size);
   }
 
-  fontItalic(int size) {
+  italic(int size) {
     return _xlFontItalic(ptr);
   }
 
@@ -32,15 +32,15 @@ class XlFont {
     _xlFontSetItalic(ptr, italic);
   }
 
-  fontStrikeOut(int size) {
+  strikeOut(int size) {
     return _xlFontStrikeOut(ptr);
   }
 
-  fontSetStrikeOut(int strikeOut) {
+  setStrikeOut(int strikeOut) {
     _xlFontSetStrikeOut(ptr, strikeOut);
   }
 
-  fontColor(int size) {
+  color(int size) {
     return _xlFontColor(ptr);
   }
 
@@ -48,35 +48,35 @@ class XlFont {
     _xlFontSetColor(ptr, color.value);
   }
 
-  fontBold(int size) {
+  bold(int size) {
     return _xlFontBold(ptr);
   }
 
-  fontSetBold(int bold) {
+  setBold(int bold) {
     _xlFontSetBold(ptr, bold);
   }
 
-  fontScript(int size) {
+  script(int size) {
     return _xlFontScript(ptr);
   }
 
-  fontSetScript(int script) {
+  setScript(int script) {
     _xlFontSetScript(ptr, script);
   }
 
-  fontUnderline() {
+  underline() {
     return _xlFontUnderline(ptr);
   }
 
-  fontSetUnderline(int underline) {
+  setUnderline(int underline) {
     _xlFontSetUnderline(ptr, underline);
   }
 
-  fontName() {
+  name() {
     return _xlFontName(ptr);
   }
 
-  fontSetName(String name) {
+  setName(String name) {
     _xlFontSetName(ptr, name);
   }
 

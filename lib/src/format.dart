@@ -30,16 +30,16 @@ class XlFormat {
     return _xlFormatNumFormat(ptr);
   }
 
-  void setNumFormat(int numFormat) {
-    _xlFormatSetNumFormat(ptr, numFormat);
+  void setNumFormat(NumFormat numFormat) {
+    _xlFormatSetNumFormat(ptr, numFormat.value);
   }
 
   alignH(int numFormat) {
     return _xlFormatAlignH(ptr);
   }
 
-  void setAlignH(int align) {
-    _xlFormatSetAlignH(ptr, align);
+  void setAlignH(AlignH align) {
+    _xlFormatSetAlignH(ptr, align.value);
   }
 
   alignV(int align) {
@@ -82,8 +82,8 @@ class XlFormat {
     _xlFormatSetShrinkToFit(ptr, shrinkToFit);
   }
 
-  void setBorder(int style) {
-    _xlFormatSetBorder(ptr, style);
+  void setBorder(BorderStyle style) {
+    _xlFormatSetBorder(ptr, style.value);
   }
 
   void setBorderColor(int color) {
@@ -94,24 +94,24 @@ class XlFormat {
     return _xlFormatBorderLeft(ptr);
   }
 
-  void setBorderLeft(int style) {
-    _xlFormatSetBorderLeft(ptr, style);
+  void setBorderLeft(BorderStyle style) {
+    _xlFormatSetBorderLeft(ptr, style.value);
   }
 
   borderRight() {
     return _xlFormatBorderRight(ptr);
   }
 
-  void setBorderRight(int style) {
-    _xlFormatSetBorderRight(ptr, style);
+  void setBorderRight(BorderStyle style) {
+    _xlFormatSetBorderRight(ptr, style.value);
   }
 
   borderTop() {
     return _xlFormatBorderTop(ptr);
   }
 
-  void setBorderTop(int style) {
-    _xlFormatSetBorderTop(ptr, style);
+  void setBorderTop(BorderStyle style) {
+    _xlFormatSetBorderTop(ptr, style.value);
   }
 
   borderBottom() {
@@ -182,16 +182,16 @@ class XlFormat {
     return _xlFormatFillPattern(ptr);
   }
 
-  void setFillPattern(int pattern) {
-    _xlFormatSetFillPattern(ptr, pattern);
+  void setFillPattern(FillPattern pattern) {
+    _xlFormatSetFillPattern(ptr, pattern.value);
   }
 
   patternForegroundColor() {
     return _xlFormatPatternForegroundColor(ptr);
   }
 
-  void setPatternForegroundColor(int color) {
-    _xlFormatSetPatternForegroundColor(ptr, color);
+  void setPatternForegroundColor(Color color) {
+    _xlFormatSetPatternForegroundColor(ptr, color.value);
   }
 
   patternBackgroundColor() {
