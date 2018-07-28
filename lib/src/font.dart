@@ -40,8 +40,8 @@ class XlFont {
     return _xlFontColor(ptr);
   }
 
-  fontSetColor(int color) {
-    _xlFontSetColor(ptr, color);
+  setColor(Color color) {
+    _xlFontSetColor(ptr, color.value);
   }
 
   fontBold(int size) {

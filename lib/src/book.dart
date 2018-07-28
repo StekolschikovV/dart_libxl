@@ -33,7 +33,7 @@ class XlBook {
   /// Gets pointer to a sheet with specified index.
   XlSheet getSheet(int index) {
     int sheetPointer = _xlBookGetSheet(ptr, index);
-    if (sheetPointer == 0) {
+    if (sheetPointer == null) {
       throw XlException(errorMessage());
     }
     return XlSheet(sheetPointer, this);
@@ -143,11 +143,12 @@ class XlBook {
   }
 
   /// Adds a new font to the workbook, initial parameters can be copied from other font.
-  void addFont(int initFont){
+  XlFont addFont(int initFont){
     var res = _xlBookAddFont(ptr, initFont);
     if (res == 0) {
       throw XlException(errorMessage());
     }
+    return new XlFont();
   }
 
   /// Adds a new custom number format to the workbook. The format string customNumFormat indicates how to format and render the numeric value of a cell. See custom format strings guidelines. Returns the custom format identifier.
@@ -243,7 +244,7 @@ class XlBook {
 
   /// ets the R1C1 reference mode: 1 - active, 0 - not active.
   void setRefR1C1(int refR1C1){
-    _xlBookSetRefR1C1(ptr, refR1C1)
+    _xlBookSetRefR1C1(ptr, refR1C1);
   }
 
   /// Sets customer's license key.
@@ -258,7 +259,7 @@ class XlBook {
 
   /// Sets a RGB mode: 1 - RGB mode, 0 - Index mode (default).
   void setRgbMode(int rgbMode){
-    _xlBookSetRgbMode(ptr, rgbMode)
+    _xlBookSetRgbMode(ptr, rgbMode);
   }
 
   /// ???

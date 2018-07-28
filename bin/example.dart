@@ -4,7 +4,7 @@ main() {
   print('------------------------------------');
   print('Start example');
   var book = new XlBook();
-  var font = new XlFont();
+//  var font = new XlFont();
 
   try {
     var notASheet = book.getSheet(0);
@@ -32,7 +32,19 @@ main() {
 
   var formatCopy = book.addFormat(initFormat: format);
   formatCopy.setAlignV(AlignV.CENTER);
+
+//  1
+//  Font* linkFont = book->addFont();
+//  linkFont->setColor(COLOR_BLUE);
+//  linkFont->setUnderline(UNDERLINE_SINGLE);
+//  =================================
+  var linkFont = book.addFont(0);
+  linkFont.setColor(Color.BLUE);
+
   sheet.writeNum(1,0,555.0, formatCopy);
+
+
+
 
   book.addSheet('CopySheet', sheet);
 
