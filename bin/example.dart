@@ -82,7 +82,7 @@ main() {
 
   sheet.setCol(1, 1, 40.0, 0);
  //sheet.setRow(1, 1, 0);
-  //sheet.setCol(2, 2, 15, 0);
+  sheet.setCol(2, 2, 15.0, 0);
 
 
 
@@ -119,7 +119,7 @@ main() {
   ////sheet.setRow(5, 40, 0);
   //book.addSheet('CopySheet', sheet);
 
-  var fileName = 'sheet.setCol(1, 1, 40, 1).xls';
+  var fileName = 't.xls';
   book.save(fileName);
   print('File $fileName was created successfully');
   book.release();
