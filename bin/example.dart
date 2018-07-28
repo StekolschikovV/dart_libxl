@@ -80,7 +80,8 @@ main() {
 
   sheet.writeStr(14, 2, "Signature", signatureFormat);
 
-  sheet.setCol(1, 1, 40, 1);
+  sheet.setCol(1, 1, 40.0, 0);
+ //sheet.setRow(1, 1, 0);
   //sheet.setCol(2, 2, 15, 0);
 
 
@@ -118,7 +119,7 @@ main() {
   ////sheet.setRow(5, 40, 0);
   //book.addSheet('CopySheet', sheet);
 
-  var fileName = 'test.xls';
+  var fileName = 'sheet.setCol(1, 1, 40, 1).xls';
   book.save(fileName);
   print('File $fileName was created successfully');
   book.release();

@@ -79,12 +79,13 @@ class XlSheet {
     _xlSheetWriteError(ptr, row, col, error, format.ptr);
   }
 
-  setCol(int colFirst, int colLast, num width, int hidden, [XlFormat format = const XlFormat.empty()]) {
+  setCol(int colFirst, int colLast, double width, int hidden, [XlFormat format = const XlFormat.empty()]) {
     //int xlSheetSetCol(SheetHandle handle, int colFirst, int colLast, double width, FormatHandle format, int hidden)
     //print('------------');
     //print(hidden);
     //print('------------');
-    var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, hidden);
+    //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, hidden);
+    var res = _xlSheetSetCol(ptr, colFirst, colLast, width, 0, hidden);
     //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, 0);
     //var res = _xlSheetSetCol(ptr, colFirst, colLast, width, format.ptr, 1);
     if (res == 0) {
