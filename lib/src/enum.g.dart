@@ -67,6 +67,10 @@ class Color {
   static const AUTO = const Color._(32767);
 }
 
+class CustomNumFormat {
+
+}
+
 class NumFormat {
   final int value;
   const NumFormat._(this.value);
@@ -106,6 +110,9 @@ class NumFormat {
   static const CUSTOM_MMSS0 = const NumFormat._(47);
   static const CUSTOM_000P0E_PLUS0 = const NumFormat._(48);
   static const TEXT = const NumFormat._(49);
+  static CUSTOM (int i) {
+    return NumFormat._(i);
+  }
 }
 
 class AlignH {
