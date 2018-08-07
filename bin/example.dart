@@ -1,4 +1,4 @@
-import 'package:libxl/libxl.dart';
+import 'package:dart_libxl/libxl.dart';
 
 //import 'dart:io';
 main() {

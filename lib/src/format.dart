@@ -92,8 +92,8 @@ class XlFormat {
     _xlFormatSetBorder(ptr, style.value);
   }
 
-  void setBorderColor(int color) {
-    _xlFormatSetBorderColor(ptr, color);
+  void setBorderColor(Color color) {
+    _xlFormatSetBorderColor(ptr, color.value);
   }
 
   borderLeft() {
