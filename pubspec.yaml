@@ -4,7 +4,9 @@ description: >-
   The package wraps the libxl library methods. Provides a 
   convenient API for creating xls files of any complexity. 
   Most of the libxl methods are implemented.
-author: Vitaly Stekolschikov <v.a.stekolschikov@gmail.com>
+author:
+- Vitaly Stekolschikov <v.a.stekolschikov@gmail.com>
+- Vadim Tsushko <vas@infovizion.ru>
 dependencies:
   build_tools:
     git: https://github.com/mezoni/build_tools.git
