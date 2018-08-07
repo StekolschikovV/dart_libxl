@@ -154,12 +154,16 @@ class XlBook {
   }
 
   /// Adds a new custom number format to the workbook. The format string customNumFormat indicates how to format and render the numeric value of a cell. See custom format strings guidelines. Returns the custom format identifier.
-  int addCustomNumFormat(String customNumFormat) {
+   addCustomNumFormat(String customNumFormat) {
     var res = _xlBookAddCustomNumFormat(ptr, customNumFormat);
     if (res == 0) {
       throw XlException(errorMessage());
     }
     return res;
+  }
+
+  NumFormat getCustomNumFormat(String customNumFormat){
+    return NumFormat.CUSTOM(addCustomNumFormat("### ### ###.###"));
   }
 
   /// Returns a custom format string for specified custom format identifier fmt.
