@@ -13,4 +13,6 @@ environment:
 dev_dependencies:
   test: ^1.0.0
   grinder: ^0.8.3
-  recase: any
+  recase:
+    git:
+      url: https://github.com/vadimtsushko/recase.git
