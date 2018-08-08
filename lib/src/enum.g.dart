@@ -495,4 +495,3 @@ class DataValidationErrorStyle {
   static const WARNING = const DataValidationErrorStyle._(1);
   static const INFORMATION  = const DataValidationErrorStyle._(2);
 }
-

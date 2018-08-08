@@ -1,16 +1,19 @@
 name: dart_libxl
 version: 1.0.0
-description: >-
-  The package wraps the libxl library methods. Provides a 
-  convenient API for creating xls files of any complexity. 
+description: A sample command-line application.
+  The package wraps the libxl library methods. Provides a
+  convenient API for creating xls files of any complexity.
   Most of the libxl methods are implemented.
 author:
 - Vitaly Stekolschikov <v.a.stekolschikov@gmail.com>
 - Vadim Tsushko <vas@infovizion.ru>
-dependencies:
-  build_tools:
-    git: https://github.com/mezoni/build_tools.git
-  ccompilers: any
-  lists: any
-  patsubst:
-    git: https://github.com/mezoni/patsubst
+environment:
+  sdk: '>=2.0.0-dev.68.0 <3.0.0'
+
+#dependencies:
+#  path: ^1.4.1
+
+dev_dependencies:
+  test: ^1.0.0
+  grinder: ^0.8.3
+  recase: any
