@@ -1,9 +1,12 @@
 name: dart_libxl
+version: 1.0.0
 description: A sample command-line application.
-# version: 1.0.0
-# homepage: https://www.example.com
-# author: vts <email@example.com>
-
+  The package wraps the libxl library methods. Provides a
+  convenient API for creating xls files of any complexity.
+  Most of the libxl methods are implemented.
+author:
+- Vitaly Stekolschikov <v.a.stekolschikov@gmail.com>
+- Vadim Tsushko <vas@infovizion.ru>
 environment:
   sdk: '>=2.0.0-dev.68.0 <3.0.0'
 

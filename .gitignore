@@ -35,8 +35,6 @@ pubspec.lock
 
 .scripts-bin/
 
-*.so
-*.o
 .dart_tool
 .idea
 *.iml
