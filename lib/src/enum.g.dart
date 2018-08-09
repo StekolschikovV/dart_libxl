@@ -191,6 +191,9 @@ class FillPattern {
   static const THINDIAGCROSSHATCH = const FillPattern._(16);
   static const GRAY12P5 = const FillPattern._(17);
   static const GRAY6P25 = const FillPattern._(18);
+  static CUSTOM (int i) {
+    return FillPattern._(i);
+  }
 }
 
 class Script {
