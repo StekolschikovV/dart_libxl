@@ -1,4 +1,4 @@
-import 'dart-ext:c/libxl_ext';
+import 'dart-ext:libxl_ext';
 
 part 'book.g.dart';
 part 'sheet.g.dart';

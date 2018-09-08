@@ -65,7 +65,7 @@ class Color {
   static const TOOLTIP = const Color._(81);
   static const NONE = const Color._(127);
   static const AUTO = const Color._(32767);
-  static CUSTOM (int i) {
+  static Color CUSTOM(int i) {
     return Color._(i);
   }
 }
