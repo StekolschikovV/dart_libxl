@@ -23,9 +23,9 @@ class XlSheet {
     }
   }
 
-  writeNum(int row, int col, double value,
+  writeNum(int row, int col, num value,
       {XlFormat format = const XlFormat.empty()}) {
-    var res = _xlSheetWriteNum(ptr, row, col, value, format.ptr);
+    var res = _xlSheetWriteNum(ptr, row, col, value.toDouble(), format.ptr);
     if (res == 0) {
       throw XlException(book.errorMessage());
     }
